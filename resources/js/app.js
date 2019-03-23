@@ -3,6 +3,7 @@ window.Vue = require('vue');
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import router from './router'
+import store from './store'
 import axios from 'axios'
 /**
  * The following block of code may be used to automatically register your
@@ -37,6 +38,7 @@ import AppRoot from './components/AppRoot'
 const app = new Vue({
     el: '#app',
     router,
+    store,
     components: {
         AppRoot
     }
