@@ -27,6 +27,7 @@ Vue.use(Vuetify, {
 });
 
 Vue.prototype.$rupiahFormat = function(value) {
+    value = parseFloat(value)
     return "Rp " + value.toLocaleString(
         "de-DE", { minimumFractionDigits: 2 }
     )
