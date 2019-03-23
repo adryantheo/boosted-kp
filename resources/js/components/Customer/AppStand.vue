@@ -50,8 +50,7 @@
                                     <v-flex>
                                         <v-btn icon outline color="primary" 
                                         @click="addToCart(item)" 
-                                        :disabled="item.qty >= item.stock"
-                                        >
+                                        :disabled="item.qty >= item.unit">
                                             <v-icon>add</v-icon>
                                         </v-btn>
                                     </v-flex>
@@ -61,8 +60,6 @@
                     </v-card>
                 </v-flex>
             </v-layout>
-
-            <v-btn color="success" @click="cek">cek</v-btn>
         </v-container>
 
         <v-bottom-sheet v-model="sheet" inset>
@@ -85,6 +82,9 @@
     </div>
 </template>
 <script>
+import { mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
+
 export default {
     props: {
         stand: {
@@ -106,10 +106,7 @@ export default {
                     thumb: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
                     name: "Menu 1",
                     price: 10000,
-                    stock: 10,
-
-                    // di .map aja ini
-                    qty: 0,
+                    unit: 10,
                 },
                 {
                     id: 2,
@@ -117,76 +114,64 @@ export default {
                     thumb: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
                     name: "Menu 2",
                     price: 15000,
-                    stock: 10,
-                    
-                    qty: 0,
+                    unit: 10,
                 },
                 {
                     id: 3,
                     thumb: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
                     name: "A",
                     price: 14000,
-                    stock: 10,
-                    
-                    qty: 0,
+                    unit: 10,
                 },
             ],
-
-            cartItems: [],
         }
     },
     methods: {
+        ...mapMutations({
+            addToCartVuex: 'addToCart',
+            removeFromCartVuex: 'removeFromCart',
+        }),
         addToCart(item) {
-            item.qty++
-
-            const { id, name, price, qty } = item
-            
-            const inCartIdx = this.cartItems.findIndex(obj => {
-                return obj.id == item.id
-            });
-
-            if(!!(inCartIdx+1)) {
-                this.cartItems[inCartIdx].qty++
-            } else {
-                const newItem = {
-                    id: id,
-                    name: name,
-                    price: price,
-                    qty: qty,
-                }
-
-                this.cartItems.push(newItem)
-            }
-            
+            // add item qty in this component
+            item.qty++;
+            // add item to vuex cart
+            this.addToCartVuex(item);
         },
         removeFromCart(item) {
-            item.qty--
-
-            const inCartIdx = this.cartItems.findIndex(obj => {
-                return obj.id == item.id
-            });
-
-            if(!!(inCartIdx+1)) {
-                if( (this.cartItems[inCartIdx].qty - 1) <= 0 )
-                    this.cartItems.splice(inCartIdx, 1)
-                else
-                    this.cartItems[inCartIdx].qty--
-            }
+            // reduce item qty in this component
+            item.qty--;
+            // remove item from vuex cart
+            this.removeFromCartVuex(item);
         },
-        cek() {
-            if(this.cartItems.length) {
-                this.cartItems.forEach(item => {
-                    console.log(item.id, item.name, item.price, item.qty);
-                    
-                });
-            } else 
-                console.log("cartempty");
-        }
+    },
+    computed: {
+        ...mapGetters([
+            'getCartItems'
+        ]),
     },
     mounted() {
         if(!!this.item) {
             this.sheet = true
         }
+
+        this.getCartItems.map((item) => item.qty)
+        
+        this.allMenus = this.allMenus.map((item) => {
+            let q = 0;
+            this.getCartItems.forEach(cartItem => {
+                if(cartItem.id === item.id) {
+                    q = cartItem.qty
+                }
+            });
+            return {
+                ...item, 
+                qty: q
+            }
+        })
+        this.allMenus.forEach(e => {
+            console.log(e.name, e.qty);
+        });
+        
     }
 }
 </script>

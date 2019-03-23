@@ -9,14 +9,77 @@
         <v-content>
             <router-view></router-view>
         </v-content>
-    </v-app>    
+        <v-dialog
+            v-model="cartDialog"
+            scrollable persistent
+            max-width="600px"
+        >
+            <v-card>
+                <v-toolbar flat dark color="primary">
+                    <v-btn icon flat>
+                        <v-icon>shopping_cart</v-icon>
+                    </v-btn>
+                    <div class="headline">
+                        Keranjang anda
+                    </div>
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="cartDialog = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                </v-toolbar>
+                <v-card-text>
+                    <v-layout column>
+                        <v-flex v-for="(item, i) in getCartItems" :key="`cartItemsName-${i}`" class="subheading mb-2">
+                        <v-layout row wrap>
+                            <v-flex xs12 class="title">
+                                {{ item.name }}
+                            </v-flex>
+                            <v-flex xs6>
+                                {{ item.qty }} x {{ $rupiahFormat(item.price) }}
+                            </v-flex>
+                            <v-flex xs6 class="text-xs-right font-weight-bold primary--text">
+                                {{ $rupiahFormat(item.price * item.qty) }} 
+                            </v-flex>
+                        </v-layout>
+                        </v-flex>
+                    </v-layout>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn large color="green" dark>
+                        <v-icon>attach_money</v-icon>
+                        bayar
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-fab-transition>
+        <v-btn
+            color="primary"
+            fab dark large
+            bottom right fixed
+            @click="cartDialog = true"
+            v-show="!!getCartItems.length"
+        >
+            <v-icon>shopping_cart</v-icon>
+        </v-btn>
+        </v-fab-transition>
+    </v-app>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
+
 export default {
     data() {
         return {
-            drawer: true,
+            cartDialog: false,
         }
-    }
+    },
+    computed: {
+        ...mapGetters([
+            'getCartItems'
+        ]),
+    },
 }
 </script>
