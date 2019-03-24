@@ -11,6 +11,7 @@ class Product extends Model
         'price',
         'units',
         'description',
+        'image',
         'stand_id'
 
     ];

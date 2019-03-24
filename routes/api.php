@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'UserController@login');
 Route::post('register', 'UserController@register');
+Route::post('/upload-image', 'ProductController@uploadImage');
 // Route::get('/products', 'ProductController@index');
 // Route::get('/products/{product}', 'ProductController@show');
 
@@ -17,4 +18,4 @@ Route::get('/products/random', 'ProductController@random');
 
 Route::resource('/orders', 'OrderController');
 Route::resource('/stands', 'StandController')->except(['random']);
-Route::resource('/products', 'ProductController')->except(['random']);
+Route::resource('/products', 'ProductController')->except(['random', 'uploadImage']);

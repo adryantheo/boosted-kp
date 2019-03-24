@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+  
     
     public function random()
     {
@@ -26,6 +27,7 @@ class ProductController extends Controller
             'description' => $request->description,
             'units' => $request->units,
             'price' => $request->price,
+            'image' => $request->image,
             'stand_id' => $request->stand_id
             
         ]);
@@ -35,6 +37,15 @@ class ProductController extends Controller
             'data'   => $product,
             'message' => $product ? 'Product Created!' : 'Error Creating Product'
         ]);
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if($request->hasFile('image')){
+            $name = time()."_".$request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('images'), $name);
+        }
+        return response()->json(asset("images/$name"),201); 
     }
 
   
@@ -47,7 +58,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $status = $product->update(
-            $request->only(['name', 'description', 'units', 'price', 'stand_id'])
+            $request->only(['name', 'description', 'units', 'price', 'image', 'stand_id'])
         );
 
         return response()->json([
