@@ -15,7 +15,8 @@ Route::patch('users/{user}','UserController@update');
 Route::get('users/{user}/orders','UserController@showOrders');
 Route::get('/stands/random', 'StandController@random');
 Route::get('/products/random', 'ProductController@random');
+Route::get('/stands-show/{stand}','StandController@showProducts');
 
 Route::resource('/orders', 'OrderController');
-Route::resource('/stands', 'StandController')->except(['random']);
+Route::resource('/stands', 'StandController')->except(['random', 'showProducts']);
 Route::resource('/products', 'ProductController')->except(['random', 'uploadImage']);

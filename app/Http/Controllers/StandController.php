@@ -14,7 +14,7 @@ class StandController extends Controller
    
     public function index()
     {
-        return response()->json(Stand::all(),200);
+        return response()->json(Stand::with(['products'])->get(),200);
     }
 
     
@@ -37,7 +37,7 @@ class StandController extends Controller
     
     public function show(Stand $stand)
     {
-        return response()->json($stand,200);
+        return response()->json($stand->with(['products'])->get(),200);
     }
 
     public function update(Request $request, Stand $stand)
@@ -50,6 +50,13 @@ class StandController extends Controller
             'status' => $status,
             'message' => $status ? 'Stand Updated!' : 'Error Updating Stand'
         ]);
+    }
+
+    public function showProducts(Stand $id)
+    {
+        // $id = intval($id);
+        // $sp = Stand::find($id)->with(['products']);
+        return response()->json($id->with(['products'])->get(),200);
     }
 
     
