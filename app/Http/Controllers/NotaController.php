@@ -32,7 +32,7 @@ class NotaController extends Controller
     
     public function show(Nota $nota)
     {
-        return response()->json($nota->with('Order')->whereIn('id', $nota)->get(),200);     
+        return response()->json($nota::with('order')->where('id', '=', $nota->id)->first());     
     }
 
    
