@@ -37,8 +37,19 @@
                             <v-flex xs6>
                                 {{ item.qty }} x {{ $rupiahFormat(item.price) }}
                             </v-flex>
-                            <v-flex xs6 class="text-xs-right font-weight-bold primary--text">
+                            <v-flex xs6 class="text-xs-right font-weight-bold">
                                 {{ $rupiahFormat(item.price * item.qty) }} 
+                            </v-flex>
+                        </v-layout>
+                        </v-flex>
+                        <v-flex>
+                        <v-divider class="my-3"></v-divider>
+                        <v-layout row wrap justify-end class="text-xs-right subheading">
+                            <v-flex>
+                                Subtotal
+                            </v-flex>
+                            <v-flex class="title primary--text">
+                                {{ $rupiahFormat(getSubtotal) }}
                             </v-flex>
                         </v-layout>
                         </v-flex>
@@ -48,7 +59,7 @@
                     <v-spacer></v-spacer>
                     <v-btn large color="green" dark>
                         <v-icon>attach_money</v-icon>
-                        bayar
+                        pesan
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -69,7 +80,6 @@
 <script>
 import { mapGetters } from 'vuex'
 
-
 export default {
     data() {
         return {
@@ -80,6 +90,10 @@ export default {
         ...mapGetters([
             'getCartItems'
         ]),
+        getSubtotal() {
+            const total = this.getCartItems.reduce((acc, item) => acc + (item.price * item.qty), 0)
+            return total
+        }
     },
 }
 </script>
