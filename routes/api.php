@@ -14,8 +14,6 @@ Route::patch('users/{user}','UserController@update');
 Route::get('users/{user}/orders','UserController@showOrders');
 Route::get('/stands/random', 'StandController@random');
 Route::get('/products/random', 'ProductController@random');
-// Route::get('/stands-produk/{id}', 'StandController@showProducts');
-
 
 
 Route::resource('/orders', 'OrderController');
