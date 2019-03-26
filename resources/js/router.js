@@ -6,6 +6,9 @@ import RootCustomer from './components/RootCustomer'
 
 // customer Pages
 import AppBazaar from './components/Customer/AppBazaar'
+import AppAllStands from './components/Customer/AppAllStands'
+import AppAllProducts from './components/Customer/AppAllProducts'
+
 import AppStand from './components/Customer/AppStand'
 
 // Admin Pages
@@ -18,7 +21,9 @@ const routes = [
         path:'/', component: RootCustomer,
         children: [
             { path: '/', component: AppBazaar },
-            { path: '/stand/:stand/:item?', component: AppStand, props: true },
+            { path: '/stands', component: AppAllStands },
+            { path: '/products', component: AppAllProducts },
+            { path: '/stands/:stand', component: AppStand, props: true},
         ]
     },
     
