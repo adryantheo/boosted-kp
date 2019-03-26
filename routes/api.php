@@ -5,8 +5,7 @@ use Illuminate\Http\Request;
 Route::post('login', 'UserController@login');
 Route::post('register', 'UserController@register');
 Route::post('/upload-image', 'ProductController@uploadImage');
-// Route::get('/products', 'ProductController@index');
-// Route::get('/products/{product}', 'ProductController@show');
+
 
 
 Route::get('/users','UserController@index');
@@ -15,8 +14,10 @@ Route::patch('users/{user}','UserController@update');
 Route::get('users/{user}/orders','UserController@showOrders');
 Route::get('/stands/random', 'StandController@random');
 Route::get('/products/random', 'ProductController@random');
-Route::get('/stands-show/{stand}','StandController@showProducts');
+// Route::get('/stands-produk/{id}', 'StandController@showProducts');
+
+
 
 Route::resource('/orders', 'OrderController');
-Route::resource('/stands', 'StandController')->except(['random', 'showProducts']);
+Route::resource('/stands', 'StandController')->except(['random']);
 Route::resource('/products', 'ProductController')->except(['random', 'uploadImage']);

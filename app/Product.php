@@ -15,13 +15,10 @@ class Product extends Model
         'stand_id'
 
     ];
-
-    // public function orders(){
-    //     return $this->hasMany(Order::class);
-    // }
     
+   
 
-    public function stand(){
+    public function Stand(){
         return $this->belongsTo(Stand::class, 'stand_id');
     }
     

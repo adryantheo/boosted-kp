@@ -51,7 +51,7 @@ class ProductController extends Controller
   
     public function show(Product $product)
     {
-        return response()->json($product,200); 
+        return response()->json($product->Stand()->with('Products')->get(),200); 
     }
 
       
@@ -66,6 +66,8 @@ class ProductController extends Controller
             'message' => $status ? 'Product Updated!' : 'Error Updating Product'
         ]);
     }
+
+    
 
     public function destroy(Product $product)
     {
