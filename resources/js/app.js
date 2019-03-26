@@ -14,9 +14,7 @@ import axios from 'axios'
  */
 
 window.EventBus = new Vue()
-window.axios = axios.create({
-    timeout: 10000,
-})
+window.axios = axios.create()
 
 Vue.use(Vuetify, {
     iconfont: 'md',
