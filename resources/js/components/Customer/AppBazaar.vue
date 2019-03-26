@@ -27,18 +27,30 @@
                     <p class="display-1 primary--text">Daftar Stand</p>
                 </v-flex>
                 <v-flex class="text-xs-right">
-                    <v-btn color="primary" @click="loadRandomStand">
+                    <v-btn color="primary" @click="loadRandomStand" :loading="randomStandLoading">
                         <v-icon left>replay</v-icon>
                         Muat lain
                     </v-btn>
                 </v-flex>
             </v-layout>
-
-            <v-layout row wrap>
-                <v-flex xs12 sm6 md4 lg3 v-for="n in 5" :key="`a${n}`">
+            <v-layout column justify-center align-center class="my-5" v-if="randomStandLoading">
+                <v-flex>
+                    <v-progress-circular
+                        :size="70"
+                        :width="7"
+                        color="primary"
+                        indeterminate
+                    ></v-progress-circular>
+                </v-flex>
+                <v-flex class="title font-weight-light">
+                    Memuat produk
+                </v-flex>
+            </v-layout>
+            <v-layout row wrap justify-center v-else>
+                <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in stands" :key="`stand-${id}`">
                 <v-card class="rounded" hover
                     :ripple="{ class: 'primary--text' }"
-                    :to="`/stand/${n}`"
+                    :to="`/stands/${item.id}`" height="100%"
                 >
                     <v-img
                     src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
@@ -46,30 +58,34 @@
                     ></v-img>
 
                     <v-card-title>
-                        <span class="headline">Cafe Badilico</span>
+                        <span class="headline">{{ item.name }}</span>
                     </v-card-title>
                     <v-card-text class="grey--text text--darken-2 pt-0">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et magnam porro quos. Dolorum, suscipit incidunt! Iure quo consequatur vero esse reprehenderit laborum adipisci, possimus exercitationem libero suscipit corrupti sit in!
+                        {{ item.description }}
                     </v-card-text>
                 </v-card>
                 </v-flex>
-                <v-flex xs12 sm6 md4 lg3>
+                <v-flex xs12 sm6 md4 lg6 v-show="!randomStandLoading">
                 <v-card class="rounded" hover
                     :ripple="{ class: 'primary--text' }"
-                    to="/all-stand" height="100%"
+                    to="/stands" height="100%"
                 >
-                    <v-layout column fill-height justify-center>
-                        <v-card-text class="px-4">
-                            <v-img
-                                src="/assets/svg/stands.svg"
-                                height="180"
-                                contain
-                            ></v-img>
-                        </v-card-text>
-                        <v-card-text class="headline primary--text font-weight-light text-xs-center">
-                            Lihat Semua
-                        </v-card-text>
+                    <v-card-text style="height: 100%" class="px-4">
+                    <v-layout row wrap justify-center align-center fill-height>
+                        <v-flex xs12 lg6>
+                        <v-img
+                            src="/assets/svg/stands.svg"
+                            height="180"
+                            contain
+                        ></v-img>
+                        </v-flex>
+                        <v-flex xs12 lg6>
+                            <v-card-text class="display-1 font-weight-light primary--text text-xs-center text-lg-left">
+                                Lihat Semua Stand
+                            </v-card-text>
+                        </v-flex>
                     </v-layout>
+                    </v-card-text>
                 </v-card>
                 </v-flex>
             </v-layout>
@@ -80,47 +96,91 @@
                     <p class="display-1 primary--text">Daftar Menu</p>
                 </v-flex>
                 <v-flex class="text-xs-right">
-                    <v-btn color="primary" @click="loadRandomMenu">
+                    <v-btn color="primary" @click="loadRandomProduct" :loading="randomProductLoading">
                         <v-icon left>replay</v-icon>
                         Muat lain
                     </v-btn>
                 </v-flex>
             </v-layout>
-            <v-layout row wrap>
-                <v-flex xs12 sm6 md4 lg3 v-for="n in 6" :key="`a${n}`">
-                <v-card class="rounded" hover
-                    :ripple="{ class: 'primary--text' }"
-                    :to="`/stand/${n}/awawawi`"
-                >
+
+            <v-layout column justify-center align-center class="my-5" v-if="randomProductLoading">
+                <v-flex>
+                    <v-progress-circular
+                        :size="70"
+                        :width="7"
+                        color="primary"
+                        indeterminate
+                    ></v-progress-circular>
+                </v-flex>
+                <v-flex class="title font-weight-light">
+                    Memuat produk
+                </v-flex>
+            </v-layout>
+            <v-layout row wrap justify-center v-else>
+                <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in products" :key="`produk-${id}`">
+                <v-card class="rounded" height="100%">
                     <v-img
-                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                    :src="item.image"
                     :aspect-ratio="16/9"
                     ></v-img>
 
                     <v-card-text>
-                        <p class="title">Kangaroo Valley Safari</p>
-                        <p class="subheading">{{ $rupiahFormat(3000) }}</p>
+                        <p class="title font-weight-regular">{{ item.name }}</p>
+                        <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
+                        <div class="subheading">Sisa {{ item.units }}</div>
                     </v-card-text>
 
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" round flat v-show="!item.qty" @click="addToCart(item)">
+                            <v-icon left>add_shopping_cart</v-icon>
+                            tambah
+                        </v-btn>
+                        <div v-show="item.qty">
+                            <v-layout align-center>
+                                <v-flex>
+                                    <v-btn icon outline color="primary" 
+                                    @click="removeFromCart(item)">
+                                        <v-icon>remove</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                                <v-flex class="title">
+                                    {{ item.qty }}
+                                </v-flex>
+                                <v-flex>
+                                    <v-btn icon outline color="primary" 
+                                    @click="addToCart(item)" 
+                                    :disabled="item.qty >= item.units">
+                                        <v-icon>add</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                            </v-layout>
+                        </div>
+                    </v-card-actions>
                 </v-card>
+
                 </v-flex>
-                <v-flex xs12 sm6 md4 lg3>
+                <v-flex xs12 md6 v-show="!randomProductLoading">
                 <v-card class="rounded" hover
                     :ripple="{ class: 'primary--text' }"
-                    to="/all-menu" height="100%"
+                    to="/products" height="100%"
                 >
-                    <v-layout column fill-height justify-center>
-                        <v-card-text class="px-4">
-                            <v-img
-                                src="/assets/svg/foods.svg"
-                                height="180"
-                                contain
-                            ></v-img>
-                        </v-card-text>
-                        <v-card-text class="headline primary--text font-weight-light text-xs-center">
-                            Lihat Semua
-                        </v-card-text>
+                    <v-card-text style="height: 100%" class="px-4">
+                    <v-layout row wrap justify-center align-center fill-height>
+                        <v-flex xs12 lg6>
+                        <v-img
+                            src="/assets/svg/foods.svg"
+                            height="180"
+                            contain
+                        ></v-img>
+                        </v-flex>
+                        <v-flex xs12 lg6>
+                            <v-card-text class="display-1 primary--text font-weight-light text-xs-center text-lg-left">
+                                Lihat Semua Menu
+                            </v-card-text>
+                        </v-flex>
                     </v-layout>
+                    </v-card-text>
                 </v-card>
                 </v-flex>
             </v-layout>
@@ -128,26 +188,81 @@
     </div>
 </template>
 <script>
+import { mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
+
 export default {
     data() {
         return {
-            randomStandLoading: false,
-            randomMenuLoading: false,
+            randomStandLoading: true,
+            randomProductLoading: true,
+            stands: [],
+            products: [],
         }
     },
+    computed: {
+        ...mapGetters([
+            'getCartItems'
+        ]),
+    },
     methods: {
+        ...mapMutations({
+            addToCartVuex: 'addToCart',
+            removeFromCartVuex: 'removeFromCart',
+        }),
         loadRandomStand() {
-            this.randomStandLoading = true;
-            setTimeout(() => {
+            return new Promise(async (resolve, reject) => {
+                this.randomStandLoading = true;
+                try {
+                    const res = await axios.get('/api/stands/random');
+                    this.stands = res.data;
+                    
+                    resolve("oke")
+                } catch (err) {
+                    reject(err);
+                }
                 this.randomStandLoading = false;
-            }, 500);
+            })
         },
-        loadRandomMenu() {
-            this.randomMenuLoading = true;
-            setTimeout(() => {
-                this.randomMenuLoading = false;
-            }, 500);
+        loadRandomProduct() {
+            return new Promise(async (resolve, reject) => {
+                this.randomProductLoading = true;
+                try {
+                    const res = await axios.get('/api/products/random');
+                    this.products = res.data.map((item) => {
+                        let q = 0;
+                        this.getCartItems.forEach(cartItem => {
+                            if(cartItem.id === item.id) {
+                                q = cartItem.qty
+                            }
+                        });
+                        return {
+                            ...item, 
+                            qty: q
+                        }
+                    });
+                    resolve("oke")
+                } catch (err) {
+                    reject(err);
+                }
+                this.randomProductLoading = false;
+            })
         },
+        addToCart(item) {
+            // add item qty in this component
+            item.qty++;
+            // add item to vuex cart
+            this.addToCartVuex(item);
+        },
+        removeFromCart(item) {
+            // reduce item qty in this component
+            item.qty--;
+            // remove item from vuex cart
+            this.removeFromCartVuex(item);
+        },
+    },
+    async mounted() {
+        Promise.all([this.loadRandomStand(), this.loadRandomProduct()]);
     },
 }
 </script>
