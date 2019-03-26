@@ -17,5 +17,9 @@ class Stand extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function Orders(){
+        return $this->hasMany(Order::class);
+    }
+
    
 }

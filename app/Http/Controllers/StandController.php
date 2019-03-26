@@ -37,6 +37,7 @@ class StandController extends Controller
     
     public function show(Stand $stand)
     {
+        
         return response()-> json(Stand::with('Products')->whereIn('id', $stand)->get(),200);                
     }
 

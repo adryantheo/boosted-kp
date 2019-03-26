@@ -11,6 +11,8 @@ class DatabaseSeeder extends Seeder
              StandTableSeeder::class,
              ProductSeeder::class,
              UserSeeder::class,
+             NotaSeeder::class,
+             OrderSeeder::class,
          ]);
     }
 }

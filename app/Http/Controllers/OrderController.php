@@ -10,7 +10,7 @@ class OrderController extends Controller
    
     public function index()
     {
-        return response()->json(Order::with(['product'])->get(),200);
+        return response()->json(Order::all(),200);
     }
 
     
@@ -18,9 +18,9 @@ class OrderController extends Controller
     {
         $order = Order::create([
             'product_id' => $request->product_id,
-            'user_id' => Auth::id(),
             'quantity' => $request->quantity,
-            'address' => $request->address
+            'harga_satuan' => $request->harga_satuan,
+            'nota_id' => $request->nota_id,
         ]);
 
         return response()->json([
@@ -40,7 +40,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $status = $order->update(
-            $request->only(['quantity'])
+            $request->only(['product_id','quantity','harga_satuan', 'nota_id'])
         );
 
         return response()->json([
