@@ -17,8 +17,9 @@
             </p>
             <v-layout row wrap>
                 <v-flex xs12 md4 lg3  v-for="(item, i) in standProducts" :key="`am-${i}`">
-                    <v-card class="rounded" height="100%">
-                        <v-img
+                    <v-card class="rounded menu-card" height="100%">
+                        <div>
+                        <v-img class="menu-img"
                         :src="item.image"
                         :aspect-ratio="16/9"
                         ></v-img>
@@ -28,6 +29,7 @@
                             <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
                             <div class="subheading">Sisa {{ item.units }}</div>
                         </v-card-text>
+                        </div>
 
                         <v-card-actions>
                             <v-spacer></v-spacer>

@@ -3,49 +3,51 @@
         <p class="display-2 primary--text mb-5 text-xs-center">Semua produk</p>
 
         <v-layout row wrap>
-                <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in products" :key="`produk-${id}`">
-                <v-card class="rounded" height="100%">
-                    <v-img
-                    :src="item.image"
-                    :aspect-ratio="16/9"
-                    ></v-img>
-
-                    <v-card-text>
-                        <p class="title font-weight-regular">{{ item.name }}</p>
-                        <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
-                        <div class="subheading">Sisa {{ item.units }}</div>
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" round flat v-show="!item.qty" @click="addToCart(item)">
-                            <v-icon left>add_shopping_cart</v-icon>
-                            tambah
-                        </v-btn>
-                        <div v-show="item.qty">
-                            <v-layout align-center>
-                                <v-flex>
-                                    <v-btn icon outline color="primary" 
-                                    @click="removeFromCart(item)">
-                                        <v-icon>remove</v-icon>
-                                    </v-btn>
-                                </v-flex>
-                                <v-flex class="title">
-                                    {{ item.qty }}
-                                </v-flex>
-                                <v-flex>
-                                    <v-btn icon outline color="primary" 
-                                    @click="addToCart(item)" 
-                                    :disabled="item.qty >= item.units">
-                                        <v-icon>add</v-icon>
-                                    </v-btn>
-                                </v-flex>
-                            </v-layout>
-                        </div>
-                    </v-card-actions>
-                </v-card>
-                </v-flex>
-            </v-layout>
+            <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in products" :key="`produk-${id}`">
+            <v-card class="rounded menu-card" height="100%">
+                <div>
+                <v-img class="menu-img"
+                :src="item.image"
+                :aspect-ratio="16/9"
+                ></v-img>
+                
+                <v-card-text class="text">
+                    <p class="title font-weight-regular">{{ item.name }}</p>
+                    <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
+                    <div class="subheading">Sisa {{ item.units }}</div>
+                </v-card-text>
+                </div>
+                
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" round flat v-show="!item.qty" @click="addToCart(item)">
+                        <v-icon left>add_shopping_cart</v-icon>
+                        tambah
+                    </v-btn>
+                    <div v-show="item.qty">
+                        <v-layout align-center>
+                            <v-flex>
+                                <v-btn icon outline color="primary" 
+                                @click="removeFromCart(item)">
+                                    <v-icon>remove</v-icon>
+                                </v-btn>
+                            </v-flex>
+                            <v-flex class="title">
+                                {{ item.qty }}
+                            </v-flex>
+                            <v-flex>
+                                <v-btn icon outline color="primary" 
+                                @click="addToCart(item)" 
+                                :disabled="item.qty >= item.units">
+                                    <v-icon>add</v-icon>
+                                </v-btn>
+                            </v-flex>
+                        </v-layout>
+                    </div>
+                </v-card-actions>
+            </v-card>
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 <script>

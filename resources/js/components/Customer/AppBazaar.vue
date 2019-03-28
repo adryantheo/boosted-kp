@@ -118,8 +118,9 @@
             </v-layout>
             <v-layout row wrap justify-center v-else>
                 <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in products" :key="`produk-${id}`">
-                <v-card class="rounded" height="100%">
-                    <v-img
+                <v-card class="rounded menu-card" height="100%">
+                    <div>
+                    <v-img class="menu-img"
                     :src="item.image"
                     :aspect-ratio="16/9"
                     ></v-img>
@@ -129,6 +130,7 @@
                         <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
                         <div class="subheading">Sisa {{ item.units }}</div>
                     </v-card-text>
+                    </div>
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
