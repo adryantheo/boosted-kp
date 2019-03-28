@@ -19,20 +19,17 @@
             </v-layout>
         </v-parallax>
         <v-container grid-list-lg class="my-5">
+            <!-- Random Stand -->
+            <v-layout justify-space-between align-center>
+                <div class="headline font-weight-bold">Daftar Stand</div>
+                <v-btn color="primary" @click="loadRandomStand" :loading="randomStandLoading">
+                    <v-icon left>replay</v-icon>
+                    Muat lain
+                </v-btn>
+            </v-layout>
             
             <v-divider class="my-3"></v-divider>
-            
-            <v-layout justify-space-between>
-                <v-flex>
-                    <p class="display-1 primary--text">Daftar Stand</p>
-                </v-flex>
-                <v-flex class="text-xs-right">
-                    <v-btn color="primary" @click="loadRandomStand" :loading="randomStandLoading">
-                        <v-icon left>replay</v-icon>
-                        Muat lain
-                    </v-btn>
-                </v-flex>
-            </v-layout>
+
             <v-layout column justify-center align-center class="my-5" v-if="randomStandLoading">
                 <v-flex>
                     <v-progress-circular
@@ -43,7 +40,7 @@
                     ></v-progress-circular>
                 </v-flex>
                 <v-flex class="title font-weight-light">
-                    Memuat produk
+                    Memuat stand
                 </v-flex>
             </v-layout>
             <v-layout row wrap justify-center v-else>
@@ -90,19 +87,17 @@
                 </v-flex>
             </v-layout>
 
-            <v-divider class="my-3"></v-divider>
-            <v-layout justify-space-between>
-                <v-flex>
-                    <p class="display-1 primary--text">Daftar Menu</p>
-                </v-flex>
-                <v-flex class="text-xs-right">
-                    <v-btn color="primary" @click="loadRandomProduct" :loading="randomProductLoading">
-                        <v-icon left>replay</v-icon>
-                        Muat lain
-                    </v-btn>
-                </v-flex>
-            </v-layout>
+            <div class="my-5"></div>
 
+            <!-- Random Menu -->
+            <v-layout justify-space-between align-center>
+                <div class="headline font-weight-bold">Daftar Menu</div>
+                <v-btn color="primary" @click="loadRandomProduct" :loading="randomProductLoading">
+                    <v-icon left>replay</v-icon>
+                    Muat lain
+                </v-btn>
+            </v-layout>
+            <v-divider class="my-3"></v-divider>
             <v-layout column justify-center align-center class="my-5" v-if="randomProductLoading">
                 <v-flex>
                     <v-progress-circular

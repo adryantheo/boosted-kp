@@ -15,7 +15,7 @@
             max-width="600px"
         >
             <v-card>
-                <v-toolbar flat dark color="primary">
+                <v-toolbar flat color="transparent">
                     <v-btn icon flat>
                         <v-icon>shopping_cart</v-icon>
                     </v-btn>
