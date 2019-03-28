@@ -1,6 +1,15 @@
 <template>
     <v-container grid-list-lg class="my-5">
-        <p class="display-2 primary--text mb-5 text-xs-center">Semua produk</p>
+        <v-layout align-center>
+            <v-btn fab dark color="primary" @click="$router.go(-1)">
+                <v-icon>arrow_back</v-icon>
+            </v-btn>
+            <div class="ml-4 headline font-weight-bold">
+                Semua Menu
+            </div>
+        </v-layout>
+
+        <v-divider class="my-4"></v-divider>
 
         <v-layout row wrap>
             <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in products" :key="`produk-${id}`">

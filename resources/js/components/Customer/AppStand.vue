@@ -8,8 +8,15 @@
         </v-parallax>
 
         <v-container grid-list-lg class="my-3">
-            <div class="headline font-weight-bold mb-1">Stand {{ name }}</div>
-            <p class="subheading">{{ description }}</p>
+            <v-layout row align-center>
+                <v-btn fab dark color="primary" @click="$router.go(-1)">
+                    <v-icon>arrow_back</v-icon>
+                </v-btn>
+                <div class="ml-4">
+                    <div class="headline font-weight-bold mb-1">Stand {{ name }}</div>
+                    <div class="subheading">{{ description }}</div>
+                </div>
+            </v-layout>
             <v-divider class="my-4"></v-divider>
 
             <p class="subheading font-weight-bold">
