@@ -17,6 +17,7 @@
                     <div class="subheading">{{ description }}</div>
                 </div>
             </v-layout>
+            
             <v-divider class="my-4"></v-divider>
 
             <p class="subheading font-weight-bold">

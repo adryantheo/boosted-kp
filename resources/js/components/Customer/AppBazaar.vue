@@ -78,7 +78,7 @@
                         </v-flex>
                         <v-flex xs12 lg6>
                             <v-card-text class="display-1 font-weight-light primary--text text-xs-center text-lg-left">
-                                Lihat Semua Stand
+                                Lihat Semua Stand!
                             </v-card-text>
                         </v-flex>
                     </v-layout>
@@ -173,7 +173,7 @@
                         </v-flex>
                         <v-flex xs12 lg6>
                             <v-card-text class="display-1 primary--text font-weight-light text-xs-center text-lg-left">
-                                Lihat Semua Menu
+                                Lihat Semua Menu!
                             </v-card-text>
                         </v-flex>
                     </v-layout>

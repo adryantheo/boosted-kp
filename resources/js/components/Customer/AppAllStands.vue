@@ -28,6 +28,9 @@
                     <v-card-text class="grey--text text--darken-2 pt-0">
                         {{ item.description }}
                     </v-card-text>
+                    <v-card-text class="font-weight-bold blue--text">
+                        {{ item.products.length }} MENU
+                    </v-card-text>
                 </v-card>
             </v-flex>
         </v-layout>
