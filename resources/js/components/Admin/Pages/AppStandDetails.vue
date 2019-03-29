@@ -44,7 +44,7 @@
             v-model="dialogNewProduct"
             persistent max-width="600px"
         >
-            <dialog-new-product @close="dialogNewProduct = false" :key="dialogNewProductKey"></dialog-new-product>
+            <dialog-new-product @close="dialogNewProduct = false" :stand="stand" :key="dialogNewProductKey"></dialog-new-product>
         </v-dialog>
     </v-container>
 </template>
