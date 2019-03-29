@@ -1,7 +1,7 @@
 <template>
     <v-container grid-list-lg class="my-3">
         <v-layout row wrap v-if="loading">
-            <v-flex xs12 class="text-xs-center" v-if="loading">
+            <v-flex xs12 class="text-xs-center">
                 <v-progress-circular
                     :size="70"
                     :width="7"
