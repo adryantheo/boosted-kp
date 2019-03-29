@@ -11,8 +11,7 @@ class NotaSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         foreach(range (1,10) as $i){
-            Nota::create([                
-                'stand_id' => $faker->numberBetween(2,6),
+            Nota::create([
                 'harga_total' => $faker->randomNumber(2),
                 'customer' => $faker->name
             ]);
