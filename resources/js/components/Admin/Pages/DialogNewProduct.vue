@@ -150,7 +150,7 @@ export default {
         }
     },
     mounted() {
-        this.$nextTick(() => this.$refs.name.focus())
+        this.$nextTick(() => this.$refs.name.focus());
     }
 }
 </script>

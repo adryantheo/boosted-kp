@@ -7,8 +7,15 @@
                 <v-icon>close</v-icon>
             </v-btn>
         </v-toolbar>
-
-        <v-form ref="form_new_stand" @submit.prevent="createNewStand">
+        <v-card-text v-if="dialogLoading" class="text-xs-center">
+            <v-progress-circular
+                :size="70"
+                :width="7"
+                color="primary"
+                indeterminate
+            ></v-progress-circular>
+        </v-card-text>
+        <v-form ref="form_new_stand" @submit.prevent="createNewStand" v-show="!dialogLoading">
             <v-card-text>
             <v-container grid-list-lg>
                 <v-layout row wrap>
@@ -33,8 +40,11 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" large type="submit" :loading="loading">
-                    buat produk
+                <v-btn color="primary" large type="submit" :loading="btnLoading">
+                    <v-icon left>
+                        {{ !!standId? 'save' : 'add'}}
+                    </v-icon>
+                    {{ !!standId? 'simpan' : 'buat stand'}}
                 </v-btn>
             </v-card-actions>
         </v-form>
@@ -42,8 +52,15 @@
 </template>
 <script>
 export default {
+    props: {
+        standId: {
+            type: Number,
+            required: true,
+        }
+    },
     data: () => ({
-        loading: false,
+        dialogLoading: true,
+        btnLoading: false,
         name: null,
         description: null,
 
@@ -54,13 +71,21 @@ export default {
     methods: {
         async createNewStand() {
             if(this.$refs.form_new_stand.validate()) {
-                this.loading = true;
+                this.btnLoading = true;
                 try {
-                    const res = await axios.post('/api/stands', {
-                        name: this.name,
-                        description: this.description
-                    })
-                    alert("Stand berhasil dibuat");
+                    if(!this.standId) {
+                        const res = await axios.post('/api/stands', {
+                            name: this.name,
+                            description: this.description
+                        })
+                        alert("Stand berhasil dibuat");
+                    } else {
+                        const res = await axios.patch(`/api/stands/${this.standId}`, {
+                            name: this.name,
+                            description: this.description
+                        })
+                        alert("Stand berhasil diubah");
+                    }
                 } catch (err) {
                     console.log(err);
                 }
@@ -68,5 +93,14 @@ export default {
             }
         },
     },
+    async mounted() {
+        if(!!this.standId) {
+            const res = await axios.get(`/api/stands/${this.standId}`)
+            this.name = res.data[0].name
+            this.description = res.data[0].description
+        }
+        this.dialogLoading = false;
+        this.$nextTick(() => this.$refs.name.focus());
+    }
 }
 </script>

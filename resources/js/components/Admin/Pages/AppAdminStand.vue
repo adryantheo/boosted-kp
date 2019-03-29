@@ -18,17 +18,15 @@
                     <p class="headline primary--text">Semua Stand</p>
                 </v-flex>
                 <v-flex class="text-xs-right">
-                    <v-btn color="primary" @click="makeNewStand">
+                    <v-btn color="primary" @click="openStandDialog">
                         <v-icon left>add</v-icon>
                         Stand Baru
                     </v-btn>
                 </v-flex>
             </v-layout>
             </v-flex>
-            <v-flex xs12 md6 lg4 v-for="(item, i) in stands" :key="`prod-${i}`">
-                <v-card class="rounded" hover
-                    :ripple="{ class: 'primary--text' }"
-                    :to="`/admin/stands/${item.id}`" height="100%">
+            <v-flex xs12 md6 xl4 v-for="(item, i) in stands" :key="`prod-${i}`">
+                <v-card class="rounded" height="100%">
                     <v-img
                     src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
                     height="180"
@@ -43,30 +41,50 @@
                     <v-card-text class="font-weight-bold blue--text">
                         {{ item.products.length }} MENU
                     </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="indigo" flat round  :to="`/admin/stands/${item.id}`">
+                            <v-icon left>info</v-icon>
+                            detail
+                        </v-btn>
+                        <v-btn color="warning" flat round @click="editStand(item.id)">
+                            <v-icon left>create</v-icon>
+                            edit
+                        </v-btn>
+                        <v-btn color="error" flat round @click="deleteStand(item.id)">
+                            <v-icon left>delete</v-icon>
+                            delete
+                        </v-btn>
+                    </v-card-actions>
                 </v-card>
             </v-flex>
         </v-layout>
         </template>
         <v-dialog
-            v-model="dialogNewStand"
+            v-model="dialogCreateEditStand"
             persistent max-width="600px"
         >
-            <dialog-new-stand @close="dialogNewStand = false"  @create_success="reloadStand" :key="dialogNewStandKey"></dialog-new-stand>
+            <dialog-create-edit-stand 
+                :standId="standId"
+                @close="closeStand"  
+                @create_success="reloadStand" 
+                :key="dialogCreateEditStandKey"></dialog-create-edit-stand>
         </v-dialog>
     </v-container>
 </template>
 <script>
-import DialogNewStand from './DialogNewStand'
+import DialogCreateEditStand from './DialogCreateEditStand'
 
 export default {
     components: {
-        DialogNewStand,
+        DialogCreateEditStand,
     },
     data: () => ({
+        standId: 0,
         loading: false,
         stands: [],
-        dialogNewStand: false,
-        dialogNewStandKey: 0,
+        dialogCreateEditStand: false,
+        dialogCreateEditStandKey: 0,
     }),
     methods: {
         fetchProducts() {
@@ -82,13 +100,33 @@ export default {
             }
             this.loading = false;
         },
-        makeNewStand() {
-            this.dialogNewStandKey = !!this.dialogNewStandKey? 0 : 1;
-            this.dialogNewStand = true;
+        openStandDialog() {
+            this.dialogCreateEditStandKey = !!this.dialogCreateEditStandKey? 0 : 1;
+            this.dialogCreateEditStand = true;
+        },
+        editStand(id) {
+            this.standId = id;
+            this.openStandDialog();
+        },
+        async deleteStand(id) {
+            const willDelete = confirm("Anda yakin ingin menghapus?");
+            if(willDelete) {
+                try {
+                    const res = await axios.delete(`/api/stands/${id}`, null);
+                    console.log(res.data);
+                    this.getProducts();
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        },
+        closeStand() {
+            this.dialogCreateEditStand = false;
+            this.standId = 0;
         },
         reloadStand() {
-            this.dialogNewStand = false;
-            this.getProducts()
+            this.closeStand();
+            this.getProducts();
         }
     },
     mounted() {
