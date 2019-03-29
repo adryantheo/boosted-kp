@@ -40,13 +40,17 @@ class NotaController extends Controller
             ]);
 
             //Creating order details
-            foreach ($request->input('products') as $product) {
+            foreach ($request->input('products') as $detail) {
                 Order::create([
-                    'product_id' => $product['product_id'],
-                    'harga_satuan' => $product['harga_satuan'],
-                    'quantity' => $product['quantity'],
+                    'product_id' => $detail['product_id'],
+                    'harga_satuan' => $detail['harga_satuan'],
+                    'quantity' => $detail['quantity'],
                     'nota_id' => $nota->id
                 ]);
+
+                $product = Product::find($detail['product_id']);
+                $product->units -= $detail['quantity'];
+                $product->save();
             }
         }, 3);
 

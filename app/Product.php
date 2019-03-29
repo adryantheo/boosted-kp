@@ -13,7 +13,6 @@ class Product extends Model
         'description',
         'image',
         'stand_id'
-
     ];
     
    
