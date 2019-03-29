@@ -46,5 +46,23 @@ export default new Vuex.Store({
         },
     },
     actions: {
+        async makeOrder({ commit, state }, name) {
+            console.log(name);
+            
+            const data = state.cartItems.map(
+                (item) => ({
+                    product_id: item.id,
+                    harga_satuan: item.price,
+                    quantity: item.qty
+                })
+            );
+            
+            try {
+                // const res = await axios.post('/api/order_transaction', data)
+                // console.log(res.data);
+            } catch (err) {
+                
+            }
+        },
     }
 })
