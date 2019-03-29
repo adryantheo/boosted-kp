@@ -13,6 +13,12 @@ import AppStand from './components/Customer/AppStand'
 
 // Admin Pages
 import AppLogin from './components/Admin/AppLogin'
+import AppDashboard from './components/Admin/AppDashboard'
+
+import AppAdminStand from './components/Admin/Pages/AppAdminStand'
+import AppAdminProduct from './components/Admin/Pages/AppAdminProduct'
+import AppAdminTransaction from './components/Admin/Pages/AppAdminTransaction'
+import AppStandDetails from './components/Admin/Pages/AppStandDetails'
 
 Vue.use(VueRouter)
 
@@ -28,11 +34,20 @@ const routes = [
     },
     
     { 
-        path:'/login', component: RootAdmin,
+        path:'/admin', component: RootAdmin,
         children: [
             { path: '/login', component: AppLogin },
+            { path: '/admin', component: AppDashboard,
+                children: [
+                    { path: '/admin', redirect: 'stands' },
+                    { path: 'stands', component: AppAdminStand },
+                    { path: 'stands/:stand', component: AppStandDetails, props: true },
+                    { path: 'products', component: AppAdminProduct },
+                    { path: 'transactions', component: AppAdminTransaction },
+                ],
+                meta: { requiresAuth: true },
+            },
         ],
-        meta: { requiresAuth: true }
     },
 ]
 
