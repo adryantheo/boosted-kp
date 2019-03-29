@@ -18,7 +18,7 @@
                     <p class="headline primary--text">Semua Stand</p>
                 </v-flex>
                 <v-flex class="text-xs-right">
-                    <v-btn color="primary" @click="makeNewProduct">
+                    <v-btn color="primary" @click="makeNewStand">
                         <v-icon left>add</v-icon>
                         Stand Baru
                     </v-btn>
@@ -51,7 +51,7 @@
             v-model="dialogNewStand"
             persistent max-width="600px"
         >
-            <dialog-new-stand @close="dialogNewStand = false"></dialog-new-stand>
+            <dialog-new-stand @close="dialogNewStand = false"  @create_success="reloadStand" :key="dialogNewStandKey"></dialog-new-stand>
         </v-dialog>
     </v-container>
 </template>
@@ -66,6 +66,7 @@ export default {
         loading: false,
         stands: [],
         dialogNewStand: false,
+        dialogNewStandKey: 0,
     }),
     methods: {
         fetchProducts() {
@@ -81,9 +82,14 @@ export default {
             }
             this.loading = false;
         },
-        makeNewProduct() {
+        makeNewStand() {
+            this.dialogNewStandKey = !!this.dialogNewStandKey? 0 : 1;
             this.dialogNewStand = true;
         },
+        reloadStand() {
+            this.dialogNewStand = false;
+            this.getProducts()
+        }
     },
     mounted() {
         this.getProducts();

@@ -33,7 +33,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" large type="submit">
+                <v-btn color="primary" large type="submit" :loading="loading">
                     buat produk
                 </v-btn>
             </v-card-actions>
@@ -43,6 +43,7 @@
 <script>
 export default {
     data: () => ({
+        loading: false,
         name: null,
         description: null,
 
@@ -53,11 +54,17 @@ export default {
     methods: {
         async createNewStand() {
             if(this.$refs.form_new_stand.validate()) {
-                const res = await axios.post('/api/stands', {
-                    name: this.name,
-                    description: this.description
-                })
-                console.log(res.data);
+                this.loading = true;
+                try {
+                    const res = await axios.post('/api/stands', {
+                        name: this.name,
+                        description: this.description
+                    })
+                    alert("Stand berhasil dibuat");
+                } catch (err) {
+                    console.log(err);
+                }
+                this.$emit('create_success');
             }
         },
     },
