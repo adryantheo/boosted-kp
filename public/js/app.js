@@ -2374,14 +2374,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    stand: {
+      type: String,
+      required: true
+    }
+  },
   data: function data() {
     return {
       fileUrl: '',
       fileBin: '',
       name: null,
-      price: null,
+      description: null,
       stock: null,
+      price: null,
       rules: {
         required: function required(v) {
           return !!v || 'Harus diisi';
@@ -2428,25 +2443,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _createNewMenu = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var data;
+        var data, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 if (!this.$refs.form_new_menu.validate()) {
-                  _context.next = 8;
+                  _context.next = 12;
                   break;
                 }
 
                 data = new FormData();
-                data.append("file", this.fileBin);
-                data.append("nama", this.name);
-                data.append("harga", this.price);
-                data.append("stock", this.stock);
-                _context.next = 8;
-                return axios.post('/ahahah', data, {});
+                data.append("name", this.name);
+                data.append("price", this.price);
+                data.append("units", this.stock);
+                data.append("description", this.description);
+                data.append("image", this.fileBin);
+                data.append("stand_id", this.stand);
+                _context.next = 10;
+                return axios.post('/api/products', data, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                });
 
-              case 8:
+              case 10:
+                res = _context.sent;
+                console.log(res.data);
+
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -2481,6 +2506,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2495,7 +2528,87 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      name: null,
+      description: null,
+      rules: {
+        required: function required(v) {
+          return !!v || 'Harus diisi';
+        }
+      }
+    };
+  },
+  methods: {
+    createNewStand: function () {
+      var _createNewStand = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.$refs.form_new_stand.validate()) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 3;
+                return axios.post('/api/stands', {
+                  name: this.name,
+                  description: this.description
+                });
+
+              case 3:
+                res = _context.sent;
+                console.log(res.data);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function createNewStand() {
+        return _createNewStand.apply(this, arguments);
+      }
+
+      return createNewStand;
+    }()
+  }
+});
 
 /***/ }),
 
@@ -6044,6 +6157,7 @@ var render = function() {
         [
           _c("dialog-new-product", {
             key: _vm.dialogNewProductKey,
+            attrs: { stand: _vm.stand },
             on: {
               close: function($event) {
                 _vm.dialogNewProduct = false
@@ -6220,6 +6334,28 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "v-flex",
+                        { attrs: { xs12: "" } },
+                        [
+                          _c("v-textarea", {
+                            attrs: {
+                              label: "Deskripsi stand",
+                              rules: [_vm.rules.required],
+                              rows: "3"
+                            },
+                            model: {
+                              value: _vm.description,
+                              callback: function($$v) {
+                                _vm.description = $$v
+                              },
+                              expression: "description"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
                         { attrs: { xs12: "", md8: "" } },
                         [
                           _c("v-text-field", {
@@ -6351,7 +6487,98 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-card-text")
+      _c(
+        "v-form",
+        {
+          ref: "form_new_stand",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.createNewStand($event)
+            }
+          }
+        },
+        [
+          _c(
+            "v-card-text",
+            [
+              _c(
+                "v-container",
+                { attrs: { "grid-list-lg": "" } },
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "", wrap: "" } },
+                    [
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "" } },
+                        [
+                          _c("v-text-field", {
+                            ref: "name",
+                            attrs: {
+                              label: "Nama stand",
+                              rules: [_vm.rules.required]
+                            },
+                            model: {
+                              value: _vm.name,
+                              callback: function($$v) {
+                                _vm.name = $$v
+                              },
+                              expression: "name"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "" } },
+                        [
+                          _c("v-textarea", {
+                            attrs: {
+                              label: "Deskripsi stand",
+                              rules: [_vm.rules.required],
+                              rows: "3"
+                            },
+                            model: {
+                              value: _vm.description,
+                              callback: function($$v) {
+                                _vm.description = $$v
+                              },
+                              expression: "description"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                { attrs: { color: "primary", large: "", type: "submit" } },
+                [_vm._v("\n                buat produk\n            ")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )

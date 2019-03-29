@@ -8,7 +8,7 @@
             </v-btn>
         </v-toolbar>
 
-            <v-form ref="form_new_menu" @submit.prevent="createNewMenu">
+        <v-form ref="form_new_menu" @submit.prevent="createNewMenu">
             <v-card-text class="text-xs-center">
                 <v-slide-y-transition>
                 <v-img class="menu-img"
@@ -42,6 +42,14 @@
                             ref="name"
                         ></v-text-field>
                     </v-flex>
+                    <v-flex xs12>
+                        <v-textarea
+                            label="Deskripsi stand"
+                            v-model="description"
+                            :rules="[rules.required]" 
+                            rows="3"
+                        ></v-textarea>
+                    </v-flex>
                     <v-flex xs12 md8>
                         <v-text-field
                             label="Harga"
@@ -72,12 +80,19 @@
 </template>
 <script>
 export default {
+    props: {
+        stand: {
+            type: String,
+            required: true,
+        },
+    },
     data: () => ({
         fileUrl: '',
         fileBin: '',
         name: null,
-        price: null,
+        description: null,
         stock: null,
+        price: null,
 
         rules: {
             required: v => !!v || 'Harus diisi',
@@ -117,14 +132,20 @@ export default {
         async createNewMenu() {
             if(this.$refs.form_new_menu.validate()) {
                 const data = new FormData();
-                data.append(`file`, this.fileBin); 
-                data.append(`nama`, this.name); 
-                data.append(`harga`, this.price); 
-                data.append(`stock`, this.stock);
+                data.append(`name`, this.name); 
+                data.append(`price`, this.price); 
+                data.append(`units`, this.stock);
+                data.append(`description`, this.description);
+                data.append(`image`, this.fileBin); 
+                data.append(`stand_id`, this.stand); 
                 
-                await axios.post('/ahahah',data, {
-                    
-                })
+                const res = await axios.post('/api/products', data, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                console.log(res.data);
             }
         }
     },
