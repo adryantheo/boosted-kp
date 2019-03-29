@@ -12,6 +12,7 @@ class CreateNotasTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('stand_id');
             $table->double('harga_total');
+            $table->string("customer");
             $table->timestamps();
         });
     }
