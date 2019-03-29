@@ -82,10 +82,6 @@ export default {
             type: String,
             required: true,
         },
-        item: {
-            type: String,
-            required: false,
-        },
     },
     data() {
         return {
