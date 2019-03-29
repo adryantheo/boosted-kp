@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Nota extends Model
 {
     protected $fillable = [
-        'stand_id',
         'harga_total',
         'customer'
     ];
