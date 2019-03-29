@@ -51,11 +51,6 @@ export default {
                 route: "/admin/stands",
             },
             {
-                icon: "local_pizza",
-                title: "Produk",
-                route: "/admin/products",
-            },
-            {
                 icon: "receipt",
                 title: "Transaksi",
                 route: "/admin/transactions",
