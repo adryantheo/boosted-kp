@@ -34,7 +34,7 @@
                 </v-btn>
             </v-layout>
             <v-layout row wrap>
-                <v-flex xs12 md6 xl4 v-for="(item, i) in standProducts" :key="`am-${i}`">
+                <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
                     <v-card class="rounded menu-card" height="100%">
                         <div>
                         <v-img class="menu-img"
