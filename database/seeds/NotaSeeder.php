@@ -14,6 +14,7 @@ class NotaSeeder extends Seeder
             Nota::create([                
                 'stand_id' => $faker->numberBetween(2,6),
                 'harga_total' => $faker->randomNumber(2),
+                'customer' => $faker->name
             ]);
         }
     }

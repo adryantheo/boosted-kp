@@ -36,7 +36,8 @@ class NotaController extends Controller
             //Creating a new transaction
             $nota = Nota::create([
                 'stand_id' => $request->input('stand_id'),
-                'harga_total' => $request->input('harga_total')
+                'harga_total' => $request->input('harga_total'),
+                'customer' => $request->input('customer')
             ]);
 
             //Creating order details
