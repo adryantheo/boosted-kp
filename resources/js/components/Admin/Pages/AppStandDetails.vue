@@ -112,7 +112,7 @@ export default {
             this.loading = true;
             try {
                 const res = await this.fetchStandDetails();
-                const stand = res.data[0];
+                const stand = res.data;
                 this.name = stand.name;
                 this.description = stand.description;
                 this.standProducts = stand.products;

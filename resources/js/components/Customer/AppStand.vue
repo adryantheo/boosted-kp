@@ -103,7 +103,7 @@ export default {
         }),
         async fetchStandDetails() {
             const res = await axios.get(`/api/stands/${this.stand}`);
-            const stand = res.data[0];
+            const stand = res.data;
             this.name = stand.name;
             this.description = stand.description;
             this.standProducts = stand.products.map((item) => {

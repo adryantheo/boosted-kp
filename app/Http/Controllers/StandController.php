@@ -38,7 +38,7 @@ class StandController extends Controller
     public function show(Stand $stand)
     {
         
-        return response()-> json(Stand::with('Products')->where('id', '=', $stand->id)->get(),200);                
+        return response()-> json(Stand::with('Products')->where('id', '=', $stand->id)->first(),200);                
     }
 
     public function update(Request $request, Stand $stand)

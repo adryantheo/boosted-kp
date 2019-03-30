@@ -86,18 +86,18 @@ export default {
                         })
                         alert("Stand berhasil diubah");
                     }
+                    this.$emit('create_success');
                 } catch (err) {
                     console.log(err);
                 }
-                this.$emit('create_success');
             }
         },
     },
     async mounted() {
         if(!!this.standId) {
             const res = await axios.get(`/api/stands/${this.standId}`)
-            this.name = res.data[0].name
-            this.description = res.data[0].description
+            this.name = res.data.name
+            this.description = res.data.description
         }
         this.dialogLoading = false;
         this.$nextTick(() => this.$refs.name.focus());
