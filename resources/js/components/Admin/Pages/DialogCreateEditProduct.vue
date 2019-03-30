@@ -65,14 +65,14 @@
                             v-model.number="price"
                             prefix="Rp"
                             suffix="/pcs"
-                            :rules="[rules.required, rules.number, rules.notZero]"
+                            :rules="[rules.required, rules.number, rules.notZero, rules.tooMuch]"
                         ></v-text-field>
                     </v-flex>
                     <v-flex xs12 md4>
                         <v-text-field
                             label="Stok"
                             v-model.number="stock"
-                            :rules="[rules.required, rules.number, rules.notZero]"
+                            :rules="[rules.required, rules.number, rules.notZero, rules.tooMuch]"
                         ></v-text-field>
                     </v-flex>
                 </v-layout>
@@ -116,8 +116,8 @@ export default {
         rules: {
             required: v => !!v || 'Harus diisi',
             number: v => /^[0-9]*$/.test(v) || 'Angka tidak valid',
-            notZero: v => v > 0 || 'Tidak boleh 0',
-            length25: v => v.length <= 25 || 'Maksimal 25 karakter'
+            notZero: v => v > 0 || 'Tidak boleh kurang dari 1',
+            tooMuch: v => v < 999999 || 'Nilai terlalu besar!',
         },
 
         errorText: '',
