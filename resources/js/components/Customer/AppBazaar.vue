@@ -44,7 +44,7 @@
                 </v-flex>
             </v-layout>
             <v-layout row wrap justify-center v-else>
-                <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in stands" :key="`stand-${id}`">
+                <v-flex xs12 md6 lg4 v-for="(item, id) in stands" :key="`stand-${id}`">
                 <v-card class="rounded" hover
                     :ripple="{ class: 'primary--text' }"
                     :to="`/stands/${item.id}`" height="100%"
@@ -62,7 +62,7 @@
                     </v-card-text>
                 </v-card>
                 </v-flex>
-                <v-flex xs12 sm6 md4 lg6 v-show="!randomStandLoading">
+                <v-flex xs12 v-show="!randomStandLoading">
                 <v-card class="rounded" hover
                     :ripple="{ class: 'primary--text' }"
                     to="/stands" height="100%"
@@ -112,7 +112,7 @@
                 </v-flex>
             </v-layout>
             <v-layout row wrap justify-center v-else>
-                <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in products" :key="`produk-${id}`">
+                <v-flex xs12 md6 lg4 v-for="(item, id) in products" :key="`produk-${id}`">
                 <v-card class="rounded menu-card" height="100%">
                     <div>
                     <v-img class="menu-img"
@@ -157,7 +157,7 @@
                 </v-card>
 
                 </v-flex>
-                <v-flex xs12 md6 v-show="!randomProductLoading">
+                <v-flex xs12 v-show="!randomProductLoading">
                 <v-card class="rounded" hover
                     :ripple="{ class: 'primary--text' }"
                     to="/products" height="100%"

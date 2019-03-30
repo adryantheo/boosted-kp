@@ -9,7 +9,7 @@ class StandController extends Controller
 {
     public function random()
     {
-        return response()->json(Stand::inRandomOrder()->take(6)->get(),200);
+        return response()->json(Stand::inRandomOrder()->take(3)->get(),200);
     }
    
     public function index()
