@@ -79,8 +79,8 @@ export default {
             addToCartVuex: 'addToCart',
             removeFromCartVuex: 'removeFromCart',
         }),
-        async getStands() {
-            const res = await axios.get('api/products')
+        async getProducts() {
+            const res = await axios.get('/api/products');
             this.products = res.data.map((item) => {
                 let q = 0;
                 this.getCartItems.forEach(cartItem => {
@@ -108,7 +108,7 @@ export default {
         },
     },
     mounted() {
-        this.getStands();
+        this.getProducts();
     },
 }
 </script>

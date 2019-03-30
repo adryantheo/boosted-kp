@@ -28,7 +28,7 @@
                     Daftar Menu
                 </div>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="makeNewProduct">
+                <v-btn color="primary" @click="openProductDialog">
                     <v-icon left>add</v-icon>
                     menu baru
                 </v-btn>
@@ -63,10 +63,12 @@
                 </v-flex>
             </v-layout>
             <v-dialog
-                v-model="dialogNewProduct"
+                v-model="dialogCreateEditProduct"
                 persistent max-width="600px"
             >
-                <dialog-new-product @close="dialogNewProduct = false" :stand="stand" :key="dialogNewProductKey"></dialog-new-product>
+                <dialog-create-edit-product 
+                    :key="dialogCreateEditProductKey">
+                </dialog-create-edit-product>
             </v-dialog>
         </div>
 
@@ -75,11 +77,11 @@
 <script>
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
-import DialogNewProduct from './DialogNewProduct'
+import DialogCreateEditProduct from './DialogCreateEditProduct'
 
 export default {
     components: {
-        DialogNewProduct,
+        DialogCreateEditProduct,
     },
     props: {
         stand: {
@@ -92,8 +94,8 @@ export default {
         name: "",
         description: "",
         standProducts: [],
-        dialogNewProduct: false,
-        dialogNewProductKey: 0,
+        dialogCreateEditProduct: false,
+        dialogCreateEditProductKey: 0,
     }),
     computed: {
         ...mapGetters([
@@ -121,9 +123,9 @@ export default {
             }    
             this.loading = false;    
         },
-        makeNewProduct() {
-            this.dialogNewProductKey = !!this.dialogNewProductKey? 0 : 1;
-            this.dialogNewProduct = true;
+        openProductDialog() {
+            this.dialogCreateEditProductKey = !!this.dialogCreateEditProductKey? 0 : 1;
+            this.dialogCreateEditProduct = true;
         },
         editProduct() {
 

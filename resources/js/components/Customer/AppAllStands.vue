@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         async getStands() {
-            const res = await axios.get('api/stands')
+            const res = await axios.get('/api/stands');
             this.stands = res.data;
         }
     },

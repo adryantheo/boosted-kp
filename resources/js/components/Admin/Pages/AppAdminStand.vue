@@ -65,10 +65,11 @@
             persistent max-width="600px"
         >
             <dialog-create-edit-stand 
-                :standId="standId"
+                :standId="parseInt(standId)"
                 @close="closeStand"  
                 @create_success="reloadStand" 
-                :key="dialogCreateEditStandKey"></dialog-create-edit-stand>
+                :key="dialogCreateEditStandKey">
+            </dialog-create-edit-stand>
         </v-dialog>
     </v-container>
 </template>
@@ -87,13 +88,13 @@ export default {
         dialogCreateEditStandKey: 0,
     }),
     methods: {
-        fetchProducts() {
+        fetchStands() {
             return axios.get('/api/stands')
         },
-        async getProducts() {
+        async getStands() {
             this.loading = true;
             try {
-                const res = await this.fetchProducts();
+                const res = await this.fetchStands();
                 this.stands = res.data;
             } catch (err) {
                 console.log(err);
@@ -114,7 +115,7 @@ export default {
                 try {
                     const res = await axios.delete(`/api/stands/${id}`, null);
                     console.log(res.data);
-                    this.getProducts();
+                    this.getStands();
                 } catch (err) {
                     console.log(err);
                 }
@@ -126,11 +127,11 @@ export default {
         },
         reloadStand() {
             this.closeStand();
-            this.getProducts();
+            this.getStands();
         }
     },
     mounted() {
-        this.getProducts();
+        this.getStands();
     }
 }
 </script>
