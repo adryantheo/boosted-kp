@@ -122,7 +122,7 @@ export default {
                 const stand = res.data;
                 this.name = stand.name;
                 this.description = stand.description;
-                this.standProducts = stand.products;
+                this.standProducts = stand.products.reverse();
             } catch (err) {
                 console.log(err);
             }    

@@ -95,7 +95,7 @@ export default {
             this.loading = true;
             try {
                 const res = await this.fetchStands();
-                this.stands = res.data;
+                this.stands = res.data.reverse();
             } catch (err) {
                 console.log(err);
             }
