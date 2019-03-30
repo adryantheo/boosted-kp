@@ -82,10 +82,12 @@
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
 import DialogCreateEditProduct from './DialogCreateEditProduct'
+import StandOrderTable from './StandOrderTable'
 
 export default {
     components: {
         DialogCreateEditProduct,
+        StandOrderTable,
     },
     props: {
         stand: {
