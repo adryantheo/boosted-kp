@@ -22,60 +22,93 @@
             </v-layout>
 
             <v-divider class="my-4"></v-divider>
-
-            <v-layout row align-center>
-                <div class="subheading font-weight-bold">
-                    Daftar Menu
-                </div>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" @click="openProductDialog">
-                    <v-icon left>add</v-icon>
-                    menu baru
-                </v-btn>
-            </v-layout>
-            <v-layout row wrap>
-                <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
-                    <v-card class="rounded menu-card" height="100%">
-                        <div>
-                        <v-img class="menu-img"
-                        :src="item.image"
-                        :aspect-ratio="16/9"
-                        ></v-img>
-
-                        <v-card-text>
-                            <p class="title font-weight-regular">{{ item.name }}</p>
-                            <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
-                            <div class="subheading">Sisa {{ item.units }}</div>
-                        </v-card-text>
-                        </div>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="warning" flat round @click="editProduct(item.id)">
-                                <v-icon left>create</v-icon>
-                                edit
-                            </v-btn>
-                            <v-btn color="error" flat round @click="deleteProduct(item.id)">
-                                <v-icon left>delete</v-icon>
-                                delete
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-flex>
-            </v-layout>
-            <v-dialog
-                v-model="dialogCreateEditProduct"
-                persistent max-width="600px"
+            <v-tabs
+                icons-and-text
+                v-model="activeTab" color="transparent"
+                slider-color="primary"
             >
-                <dialog-create-edit-product 
-                    @close="closeProduct" 
-                    @create_success="reloadProduct"
-                    :productId="parseInt(productId)" 
-                    :stand="parseInt(stand)"
-                    :key="dialogCreateEditProductKey">
-                </dialog-create-edit-product>
-            </v-dialog>
-        </div>
+                <v-tab
+                    v-for="(item, i) in tabItems"
+                    :key="i" ripple
+                    :href="`#tab-${i}`"
+                >
+                    {{ item.name }}
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-tab>
+                <v-tab-item value="tab-0">
+                <v-container grid-list-lg>
+                    <v-layout row align-center class="mt-2 mb-3">
+                        <div class="subheading font-weight-bold">
+                            Daftar Menu
+                        </div>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" @click="openProductDialog">
+                            <v-icon left>add</v-icon>
+                            menu baru
+                        </v-btn>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
+                            <v-card class="rounded menu-card" height="100%">
+                                <div>
+                                <v-img class="menu-img"
+                                :src="item.image"
+                                :aspect-ratio="16/9"
+                                ></v-img>
 
+                                <v-card-text>
+                                    <p class="title font-weight-regular">{{ item.name }}</p>
+                                    <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
+                                    <div class="subheading">Sisa {{ item.units }}</div>
+                                </v-card-text>
+                                </div>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="warning" flat round @click="editProduct(item.id)">
+                                        <v-icon left>create</v-icon>
+                                        edit
+                                    </v-btn>
+                                    <v-btn color="error" flat round @click="deleteProduct(item.id)">
+                                        <v-icon left>delete</v-icon>
+                                        delete
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                    <v-dialog
+                        v-model="dialogCreateEditProduct"
+                        persistent max-width="600px"
+                    >
+                        <dialog-create-edit-product 
+                            @close="closeProduct" 
+                            @create_success="reloadProduct"
+                            :productId="parseInt(productId)" 
+                            :stand="parseInt(stand)"
+                            :key="dialogCreateEditProductKey">
+                        </dialog-create-edit-product>
+                    </v-dialog>
+                </v-container>
+                </v-tab-item>
+                <v-tab-item value="tab-1">
+                <v-container grid-list-lg>
+                    <v-layout row align-center class="mt-2 mb-3">
+                        <div class="subheading font-weight-bold">
+                            Daftar Menu
+                        </div>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary">
+                            <v-icon left>replay</v-icon>
+                            muat ulang
+                        </v-btn>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <stand-order-table></stand-order-table>
+                    </v-layout>
+                </v-container>
+                </v-tab-item>
+            </v-tabs>
+        </div>
     </v-container>
 </template>
 <script>
@@ -96,6 +129,12 @@ export default {
         },
     },
     data: () => ({
+        activeTab: null,
+        tabItems: [
+            {name: "Daftar Menu", icon: "local_dining"},
+            {name: "Daftar Order", icon: "receipt"},
+        ],
+
         productId: 0,
         loading: false,
         name: "",
