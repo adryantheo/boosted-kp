@@ -7,15 +7,22 @@
                 <v-icon>close</v-icon>
             </v-btn>
         </v-toolbar>
-
-        <v-form ref="form_new_menu" @submit.prevent="createNewMenu">
+        <v-card-text v-if="dialogLoading" class="text-xs-center">
+            <v-progress-circular
+                :size="70"
+                :width="7"
+                color="primary"
+                indeterminate
+            ></v-progress-circular>
+        </v-card-text>
+        <v-form ref="form_new_menu" @submit.prevent="createNewMenu"
+        v-show="!dialogLoading">
             <v-card-text class="text-xs-center">
                 <v-slide-y-transition>
                 <v-img class="menu-img"
                     v-if="!!fileUrl"
                     :src="fileUrl"
-                    :aspect-ratio="16/9"
-                    max-height="300px"
+                    max-height="200px"
                     contain
                 ></v-img>
                 </v-slide-y-transition>
@@ -71,8 +78,11 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" large type="submit">
-                    buat produk
+                <v-btn color="primary" large type="submit" :loading="btnLoading">
+                    <v-icon left>
+                        {{ !!productId? 'save' : 'add'}}
+                    </v-icon>
+                    {{ !!productId? 'simpan' : 'buat produk'}}
                 </v-btn>
             </v-card-actions>
         </v-form>
@@ -82,11 +92,18 @@
 export default {
     props: {
         stand: {
-            type: String,
+            type: Number,
+            required: true,
+        },
+        productId: {
+            type: Number,
             required: true,
         },
     },
     data: () => ({
+        dialogLoading: true,
+        btnLoading: false,
+
         fileUrl: '',
         fileBin: '',
         name: null,
@@ -131,6 +148,7 @@ export default {
         },
         async createNewMenu() {
             if(this.$refs.form_new_menu.validate()) {
+                this.btnLoading = true;
                 const data = new FormData();
                 data.append(`name`, this.name); 
                 data.append(`price`, this.price); 
@@ -139,17 +157,37 @@ export default {
                 data.append(`image`, this.fileBin); 
                 data.append(`stand_id`, this.stand); 
                 
-                const res = await axios.post('/api/products', data, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
+                try {
+                    if(!this.productId) {
+                        const res = await axios.post('/api/products', data, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+                    } else {
+                        const res = await axios.patch('/api/products', data, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
                     }
-                });
-
-                console.log(res.data);
+                    this.$emit('create_success');   
+                } catch (err) {
+                    console.log(err);
+                }
             }
         }
     },
-    mounted() {
+    async mounted() {
+        if(!!this.productId) {
+            const res = await axios.get(`/api/products/${this.productId}`)
+            this.fileUrl = res.data.image;
+            this.name = res.data.name;
+            this.description = res.data.description;
+            this.stock = res.data.units;
+            this.price = res.data.price;
+        }
+        this.dialogLoading = false;
         this.$nextTick(() => this.$refs.name.focus());
     }
 }

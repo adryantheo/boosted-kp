@@ -68,6 +68,9 @@
             >
                 <dialog-create-edit-product 
                     @close="closeProduct" 
+                    @create_success="reloadProduct"
+                    :productId="parseInt(productId)" 
+                    :stand="parseInt(stand)"
                     :key="dialogCreateEditProductKey">
                 </dialog-create-edit-product>
             </v-dialog>
@@ -91,6 +94,7 @@ export default {
         },
     },
     data: () => ({
+        productId: 0,
         loading: false,
         name: "",
         description: "",
@@ -128,8 +132,9 @@ export default {
             this.dialogCreateEditProductKey = !!this.dialogCreateEditProductKey? 0 : 1;
             this.dialogCreateEditProduct = true;
         },
-        editProduct() {
-
+        editProduct(id) {
+            this.productId = id;
+            this.openProductDialog();
         },
         async deleteProduct(id) {
             const willDelete = confirm("Anda yakin ingin menghapus?");
@@ -142,10 +147,14 @@ export default {
                     console.log(err);
                 }
             }
+        },
         closeProduct() {
             this.dialogCreateEditProduct = false;
             this.productId = 0;
         },
+        reloadProduct() {
+            this.closeProduct();
+            this.getStandDetails();
         }
     },
     mounted() {
