@@ -83,8 +83,9 @@
                 <v-spacer></v-spacer>
                 <v-btn
                     v-if="step === 2" large
-                    color="success" @click="makeOrder(ordererName)"
+                    color="success" @click="createOrder"
                     :disabled="!ordererName"
+                    :loading="loading"
                 >
                     Pesan
                 </v-btn>
@@ -96,7 +97,6 @@
                     Lanjut
                 </v-btn>
                 </v-card-actions>
-
             </v-card>
         </v-dialog>
 
@@ -122,6 +122,7 @@ export default {
         cartDialog: false,
         step: 1,
         ordererName: "",
+        loading: false,
     }),
     computed: {
         ...mapGetters([
@@ -134,8 +135,25 @@ export default {
     },
     methods: {
         ...mapActions([
-            'makeOrder'
+            'makeOrder',
         ]),
+        async createOrder() {
+            this.loading = true;
+            try {
+                const res = await this.makeOrder(this.ordererName);
+                alert("Pesanan berhasil dibuat");
+                
+                const print = await axios.get(`/api/nota/${res.data.nota_id}`);
+                console.log(print.data);
+
+            } catch (err) {
+                alert("Pesanan gagal dibuat!");
+                console.log(err);
+            }
+            this.cartDialog = false;
+            location.reload();
+            // this.$htmlToPaper('printMe');
+        },
         closeDialog() {
             this.cartDialog = false;
             this.step = 1;

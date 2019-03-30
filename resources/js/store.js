@@ -8,7 +8,7 @@ export default new Vuex.Store({
         cartItems: [],
     },
     getters: {
-        getCartItems: (state) => state.cartItems
+        getCartItems: (state) => state.cartItems,
     },
     mutations: {
         addToCart(state, item) {
@@ -44,11 +44,14 @@ export default new Vuex.Store({
                     state.cartItems[inCartIdx].qty--
             }
         },
+        emptyCart(state) {
+            state.cartItems = [];
+        }
     },
     actions: {
         async makeOrder({ commit, state }, name) {
-            console.log(name);
-            
+            const total = state.cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0)
+
             const data = state.cartItems.map(
                 (item) => ({
                     product_id: item.id,
@@ -56,12 +59,24 @@ export default new Vuex.Store({
                     quantity: item.qty
                 })
             );
-            
+
             try {
-                // const res = await axios.post('/api/order_transaction', data)
-                // console.log(res.data);
-            } catch (err) {
+                const res = await axios.post('/api/nota', {
+                    customer: name,
+                    harga_total: total,
+                    products: data
+                },{
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json',
+                    }
+                });
                 
+                commit('emptyCart');
+
+                return Promise.resolve(res);
+            } catch (err) {
+                return Promise.reject(err);
             }
         },
     }
