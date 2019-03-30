@@ -67,6 +67,7 @@
                 persistent max-width="600px"
             >
                 <dialog-create-edit-product 
+                    @close="closeProduct" 
                     :key="dialogCreateEditProductKey">
                 </dialog-create-edit-product>
             </v-dialog>
@@ -141,6 +142,10 @@ export default {
                     console.log(err);
                 }
             }
+        closeProduct() {
+            this.dialogCreateEditProduct = false;
+            this.productId = 0;
+        },
         }
     },
     mounted() {
