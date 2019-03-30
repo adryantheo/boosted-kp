@@ -26,16 +26,16 @@
             v-model="dialogTransactionDetail"
             persistent max-width="600px"
         >
-            <dialog-new-product @close="dialogTransactionDetail = false"></dialog-new-product>
+            <dialog-transaction-detail @close="dialogTransactionDetail = false"></dialog-transaction-detail>
         </v-dialog>
     </v-container>
 </template>
 <script>
-import DialogNewProduct from './DialogNewProduct'
+import DialogTransactionDetail from './DialogTransactionDetail'
 
 export default {
     components: {
-        DialogNewProduct,
+        DialogTransactionDetail,
     },
     data: () => ({
         loading: false,
