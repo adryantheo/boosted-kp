@@ -45,22 +45,7 @@
             </v-layout>
             <v-layout row wrap justify-center v-else>
                 <v-flex xs12 md6 lg4 v-for="(item, id) in stands" :key="`stand-${id}`">
-                <v-card class="rounded" hover
-                    :ripple="{ class: 'primary--text' }"
-                    :to="`/stands/${item.id}`" height="100%"
-                >
-                    <v-img
-                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-                    height="180"
-                    ></v-img>
-
-                    <v-card-title>
-                        <span class="headline">{{ item.name }}</span>
-                    </v-card-title>
-                    <v-card-text class="grey--text text--darken-2 pt-0">
-                        {{ item.description }}
-                    </v-card-text>
-                </v-card>
+                    <stand-card :item="item"></stand-card>
                 </v-flex>
                 <v-flex xs12 v-show="!randomStandLoading">
                 <v-card class="rounded" hover
@@ -113,50 +98,7 @@
             </v-layout>
             <v-layout row wrap justify-center v-else>
                 <v-flex xs12 md6 lg4 v-for="(item, id) in products" :key="`produk-${id}`">
-                <v-card class="rounded menu-card" height="100%">
-                    <div>
-                    <v-img class="menu-img"
-                    :src="item.image"
-                    :aspect-ratio="16/9"
-                    ></v-img>
-
-                    <v-card-text>
-                        <p class="title font-weight-regular">{{ item.name }}</p>
-                        <p class="subheading">{{ $rupiahFormat(item.price) }}</p>
-                        <div class="title blue--text" v-if="item.units > 0">Sisa {{ item.units }}</div>
-                        <div class="title red--text text-uppercase" v-else>habis!</div>
-                    </v-card-text>
-                    </div>
-
-                    <v-card-actions v-if="item.units > 0">
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" round flat v-show="!item.qty" @click="addToCart(item)">
-                            <v-icon left>add_shopping_cart</v-icon>
-                            tambah
-                        </v-btn>
-                        <div v-show="item.qty">
-                            <v-layout align-center>
-                                <v-flex>
-                                    <v-btn icon outline color="primary" 
-                                    @click="removeFromCart(item)">
-                                        <v-icon>remove</v-icon>
-                                    </v-btn>
-                                </v-flex>
-                                <v-flex class="title">
-                                    {{ item.qty }}
-                                </v-flex>
-                                <v-flex>
-                                    <v-btn icon outline color="primary" 
-                                    @click="addToCart(item)" 
-                                    :disabled="item.qty >= item.units">
-                                        <v-icon>add</v-icon>
-                                    </v-btn>
-                                </v-flex>
-                            </v-layout>
-                        </div>
-                    </v-card-actions>
-                </v-card>
-
+                    <product-card :item="item"></product-card>
                 </v-flex>
                 <v-flex xs12 v-show="!randomProductLoading">
                 <v-card class="rounded" hover
@@ -186,10 +128,15 @@
     </div>
 </template>
 <script>
-import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
+import ProductCard from './ProductCard'
+import StandCard from './StandCard'
 
 export default {
+    components: {
+        ProductCard,
+        StandCard,
+    },
     data() {
         return {
             randomStandLoading: true,
@@ -204,10 +151,6 @@ export default {
         ]),
     },
     methods: {
-        ...mapMutations({
-            addToCartVuex: 'addToCart',
-            removeFromCartVuex: 'removeFromCart',
-        }),
         loadRandomStand() {
             return new Promise(async (resolve, reject) => {
                 this.randomStandLoading = true;
@@ -245,18 +188,6 @@ export default {
                 }
                 this.randomProductLoading = false;
             })
-        },
-        addToCart(item) {
-            // add item qty in this component
-            item.qty++;
-            // add item to vuex cart
-            this.addToCartVuex(item);
-        },
-        removeFromCart(item) {
-            // reduce item qty in this component
-            item.qty--;
-            // remove item from vuex cart
-            this.removeFromCartVuex(item);
         },
     },
     async mounted() {
