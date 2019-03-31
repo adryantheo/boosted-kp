@@ -94,6 +94,10 @@ export default {
             type: String,
             required: true,
         },
+        standId: {
+            type: String,
+            required: true,
+        },
     },
     data: () => ({
         loading: false,
@@ -123,7 +127,7 @@ export default {
         fetchStandOrders() {
             return axios.get('/api/orders', {
                 params: {
-                    stand: this.stand
+                    stand: this.standId
                 }
             });
         },
@@ -140,9 +144,6 @@ export default {
                     qty: item.quantity,
                     total: (item.quantity * item.harga_satuan)
                 }));
-                
-                console.log();
-                
             } catch (err) {
                 console.log(err);
             }

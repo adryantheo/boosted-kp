@@ -107,7 +107,10 @@
                         </v-btn>
                     </v-layout>
                     <v-layout row wrap>
-                        <stand-order-table :standName="name"></stand-order-table>
+                        <stand-order-table
+                            :standName="name"
+                            :standId="stand"
+                        ></stand-order-table>
                     </v-layout>
                 </v-container>
                 </v-tab-item>
