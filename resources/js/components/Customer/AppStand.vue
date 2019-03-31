@@ -2,7 +2,7 @@
     <div>
         <v-parallax
             dark
-            src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+            src="/assets/stands_bg.jpg"
             height="300"
         >
         </v-parallax>

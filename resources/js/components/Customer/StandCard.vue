@@ -4,7 +4,7 @@
         :to="`/stands/${item.id}`" height="100%"
     >
         <v-img
-        src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        src="/assets/stand_placeholder.jpg"
         height="180"
         ></v-img>
 
