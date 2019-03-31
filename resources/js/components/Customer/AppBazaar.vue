@@ -122,12 +122,13 @@
 
                     <v-card-text>
                         <p class="title font-weight-regular">{{ item.name }}</p>
-                        <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
-                        <div class="subheading">Sisa {{ item.units }}</div>
+                        <p class="subheading">{{ $rupiahFormat(item.price) }}</p>
+                        <div class="title blue--text" v-if="item.units > 0">Sisa {{ item.units }}</div>
+                        <div class="title red--text text-uppercase" v-else>habis!</div>
                     </v-card-text>
                     </div>
 
-                    <v-card-actions>
+                    <v-card-actions v-if="item.units > 0">
                         <v-spacer></v-spacer>
                         <v-btn color="primary" round flat v-show="!item.qty" @click="addToCart(item)">
                             <v-icon left>add_shopping_cart</v-icon>
