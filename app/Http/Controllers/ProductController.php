@@ -18,8 +18,13 @@ class ProductController extends Controller
     {
         return response()->json(Product::all(),200);
     }
-    
-      
+
+    /**
+     * Save a new product to storage.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $product = Product::create([
@@ -27,7 +32,7 @@ class ProductController extends Controller
             'description' => $request->description,
             'units' => $request->units,
             'price' => $request->price,
-            'image' => $request->image,
+            'image' => $this->uploadImage($request),
             'stand_id' => $request->stand_id
             
         ]);
@@ -39,13 +44,27 @@ class ProductController extends Controller
         ]);
     }
 
-    public function uploadImage(Request $request)
+    /**
+     * Handle an image upload.
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function uploadImage(Request $request, $name = null)
     {
         if($request->hasFile('image')){
-            $name = time()."_".$request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('images'), $name);
+            $image = $request->file('image');
+
+            if (is_null($name)) {
+                $name = time() . "_" . rand(1000) . "." . $image->getClientOriginalExtension();
+            }
+
+            $image->move(public_path('images'), $name);
+
+            return 'images/'.$name;
         }
-        return response()->json(asset("images/$name"),201); 
+
+        return '';
     }
 
   
@@ -54,12 +73,19 @@ class ProductController extends Controller
         return response()-> json(Product::where('id', '=', $product->id)->first(),200); 
     }
 
-      
+    /**
+     * Update a product from storage.
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, Product $product)
     {
-        $status = $product->update(
-            $request->only(['name', 'description', 'units', 'price', 'image', 'stand_id'])
-        );
+        $data = $request->only(['name', 'description', 'units', 'price', 'stand_id']);
+        $data['image'] = $this->uploadImage($request, $product->image);
+
+        $status = $product->update($data)->save();
 
         return response()->json([
             'status' => $status,
@@ -67,8 +93,13 @@ class ProductController extends Controller
         ]);
     }
 
-    
-
+    /**
+     * Remove a product from storage.
+     *
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function destroy(Product $product)
     {
         $status = $product->delete();
