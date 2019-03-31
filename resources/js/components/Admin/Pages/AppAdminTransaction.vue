@@ -31,12 +31,7 @@
     </v-container>
 </template>
 <script>
-import DialogTransactionDetail from './DialogTransactionDetail'
-
 export default {
-    components: {
-        DialogTransactionDetail,
-    },
     data: () => ({
         loading: false,
         transactions: [],
