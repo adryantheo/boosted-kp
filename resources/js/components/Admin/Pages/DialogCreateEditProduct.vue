@@ -31,7 +31,7 @@
 
                 <p v-show="!!errorText" class="red--text">{{ errorText }}</p>
 
-                <v-btn color="primary" flat @click="pickFile">Ganti Gambar</v-btn>
+                <v-btn color="primary" flat @click="pickFile">Upload Gambar</v-btn>
                 
                 <input type="file"
                     ref="file"
@@ -53,7 +53,7 @@
                     </v-flex>
                     <v-flex xs12>
                         <v-textarea
-                            label="Deskripsi stand"
+                            label="Deskripsi menu"
                             v-model="description"
                             :rules="[rules.required]" 
                             rows="3"
@@ -167,7 +167,7 @@ export default {
                             }
                         });
                     } else {
-                        const res = await axios.patch('/api/products', data, {
+                        const res = await axios.patch(`/api/products/${this.productId}`, data, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
