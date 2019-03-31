@@ -8,9 +8,21 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
    
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Order::all(),200);
+        if ($request->has('stand')) {
+            return response()->json(
+                Order::with([
+                    'Nota:id,customer',
+                    'Product' => function($query) use ($request) {
+                        $query->where('stand_id', '=', $request->input('stand'));
+                        $query->select('id', 'name');
+                    }
+                ])->get()
+            );
+        }
+
+        return response()->json(Order::with(['Nota:id,customer', 'Product:id,name'])->get(),200);
     }
 
     
