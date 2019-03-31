@@ -31,7 +31,21 @@ Vue.prototype.$rupiahFormat = function(value) {
     )
 }
 
-import Cart from './helpers/Cart'
+// html to paper
+import VueHtmlToPaper from 'vue-html-to-paper';
+ 
+Vue.use(VueHtmlToPaper, {
+    name: '_blank',
+    specs: [
+        'fullscreen=no',
+        'titlebar=no',
+        'scrollbars=yes'
+    ],
+    styles: [
+        '/css/print.css',
+        '/css/app.css',
+    ],
+});
 
 import AppRoot from './components/AppRoot'
 const app = new Vue({
