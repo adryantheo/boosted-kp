@@ -48,6 +48,7 @@ class ProductController extends Controller
      * Handle an image upload.
      *
      * @param Request $request
+     * @param null $name
      * @return string
      */
     public function uploadImage(Request $request, $name = null)
@@ -67,10 +68,13 @@ class ProductController extends Controller
         return '';
     }
 
-  
+    /**
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show(Product $product)
     {
-        return response()-> json(Product::where('id', '=', $product->id)->first(),200); 
+        return response()-> json($product,200);
     }
 
     /**
@@ -90,7 +94,7 @@ class ProductController extends Controller
         return response()->json([
             'status' => $status,
             'message' => $status ? 'Product Updated!' : 'Error Updating Product'
-        ]);
+        ], 200);
     }
 
     /**
@@ -104,9 +108,9 @@ class ProductController extends Controller
     {
         $status = $product->delete();
 
-            return response()->json([
-                'status' => $status,
-                'message' => $status ? 'Product Deleted!' : 'Error Deleting Product'
-            ]);
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Product Deleted!' : 'Error Deleting Product'
+        ], 200);
     }
 }
