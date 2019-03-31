@@ -140,12 +140,12 @@
                         <template v-for="(item, i) in nota.order">
                             <tr :key="`nt1-${i}`">
                                 <td colspan="2">
-                                    {{ item.product_id }}
+                                    {{ item.product.name }}
                                 </td>
                             </tr>
                             <tr :key="`nt2-${i}`">
                                 <td>
-                                    {{ item.qty }} x {{ $rupiahFormat(item.harga_satuan) }}
+                                    {{ item.quantity }} x {{ $rupiahFormat(item.harga_satuan) }}
                                 </td>
                                 <td class="text-xs-right">
                                     {{ $rupiahFormat(item.harga_satuan * item.quantity) }}
