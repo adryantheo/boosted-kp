@@ -225,7 +225,6 @@ export default {
             this.loading = true;
             try {
                 let res = await this.makeOrder(this.ordererName);
-                alert("Pesanan berhasil dibuat");
                 let print = await axios.get(`/api/nota/${res.data.nota_id}`);
                 this.nota = print.data;
                 console.log(this.nota);
