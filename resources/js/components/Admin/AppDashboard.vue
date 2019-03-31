@@ -24,7 +24,7 @@
 
                 <v-divider dark class="my-3"></v-divider>
                 
-                <v-list-tile to="/logout">
+                <v-list-tile @click="logout">
                     <v-list-tile-action>
                         <v-icon>power_settings_new</v-icon>
                     </v-list-tile-action>
@@ -41,6 +41,8 @@
     </v-app>
 </template>
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     data: () => ({
         drawer: true,
@@ -56,6 +58,19 @@ export default {
                 route: "/admin/transactions",
             },
         ],
-    })
+    }),
+    methods: {
+        ...mapActions([
+            'logoutRequest'
+        ]),
+        async logout() {
+            try {
+                await this.logoutRequest()
+                this.$router.replace({path: "/login"})
+            } catch (err) {
+                alert(err);
+            }
+        },
+    },
 }
 </script>

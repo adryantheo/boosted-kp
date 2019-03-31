@@ -55,4 +55,24 @@ const router = new VueRouter({
     mode: 'history',
 })
 
+import store from './store'
+
+router.beforeEach(async (to, from, next) => {
+    if(to.matched.some(route => route.meta.requiresAuth)) {
+        if(!store.state.authenticated) {
+            next({path: '/login', replace: true})
+            return
+        }
+    }
+    
+    if(to.path === "/login") {
+        if(store.state.authenticated) {
+            next({path: '/admin', replace: true})
+            return
+        }
+    }
+
+    next();
+})
+
 export default router;

@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         cartItems: [],
+        authenticated: localStorage.getItem('token')? true : false,
     },
     getters: {
         getCartItems: (state) => state.cartItems,
@@ -46,7 +47,15 @@ export default new Vuex.Store({
         },
         emptyCart(state) {
             state.cartItems = [];
-        }
+        },
+        login(state) {
+            localStorage.setItem('token', '1234')
+            state.authenticated = true;
+        },
+        logout(state) {
+            localStorage.removeItem('token')
+            state.authenticated = false;
+        },
     },
     actions: {
         async makeOrder({ commit, state }, name) {
@@ -78,6 +87,28 @@ export default new Vuex.Store({
             } catch (err) {
                 return Promise.reject(err);
             }
+        },
+        async loginRequest({ commit }, {user, pass}) {
+            console.log(user, pass);
+            
+            return new Promise((resolve, reject) => {
+                if(user === "admin" && pass === "secret") {
+                    setTimeout(() => {
+                        commit('login');
+                        resolve("logged in");
+                    }, 500);
+                } else {
+                    setTimeout(() => {
+                        reject('incorrect');
+                    }, 500);
+                }
+            })
+        },
+        async logoutRequest({ commit }) {
+            return new Promise(resolve => {
+                commit('logout');
+                resolve("logged out");
+            })
         },
     }
 })
