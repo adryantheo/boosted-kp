@@ -94,16 +94,20 @@
                 <v-container grid-list-lg>
                     <v-layout row align-center class="mt-2 mb-3">
                         <div class="subheading font-weight-bold">
-                            Daftar Menu
+                            Riwayat Order
                         </div>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary">
+                        <v-btn color="primary" @click="reloadOrders" :loading="reloadLoading">
                             <v-icon left>replay</v-icon>
                             muat ulang
                         </v-btn>
+                        <v-btn color="success" @click="printOrders">
+                            <v-icon left>print</v-icon>
+                            cetak
+                        </v-btn>
                     </v-layout>
                     <v-layout row wrap>
-                        <stand-order-table></stand-order-table>
+                        <stand-order-table :standName="name"></stand-order-table>
                     </v-layout>
                 </v-container>
                 </v-tab-item>
@@ -132,11 +136,12 @@ export default {
         activeTab: null,
         tabItems: [
             {name: "Daftar Menu", icon: "local_dining"},
-            {name: "Daftar Order", icon: "receipt"},
+            {name: "Riwayat Order", icon: "receipt"},
         ],
 
         productId: 0,
         loading: false,
+        reloadLoading: false,
         name: "",
         description: "",
         standProducts: [],
@@ -196,10 +201,20 @@ export default {
         reloadProduct() {
             this.closeProduct();
             this.getStandDetails();
-        }
+        },
+        reloadOrders() {
+            this.reloadLoading = true;
+            EventBus.$emit('reload_orders');
+        },
+        printOrders() {
+            EventBus.$emit('print_orders');
+        },
     },
     mounted() {
         this.getStandDetails();
+        EventBus.$on('reload_orders_done',() => {
+            this.reloadLoading = false;
+        })
     }
 }
 </script>
