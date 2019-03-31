@@ -19,7 +19,7 @@ class NotaController extends Controller
      */
     public function index()
     {
-        return response()->json(Nota::all(),200);
+        return response()->json(Nota::with(['Order', 'Order.Product:id,name'])->get(),200);
     }
 
     /**
@@ -69,7 +69,7 @@ class NotaController extends Controller
      */
     public function show(Nota $nota)
     {
-        return response()->json($nota::with('Order')->where('id', '=', $nota->id)->first());     
+        return response()->json($nota::with(['Order', 'Order.Product:id,name'])->where('id', '=', $nota->id)->first());
     }
 
     /**
