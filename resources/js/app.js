@@ -31,6 +31,11 @@ Vue.prototype.$rupiahFormat = function(value) {
     )
 }
 
+// vue sweet-alert
+import VueSwal from 'vue-swal'
+ 
+Vue.use(VueSwal);
+
 // html to paper
 import VueHtmlToPaper from 'vue-html-to-paper';
  
