@@ -121,6 +121,7 @@
                             @click="print"
                             block
                         >
+                            <v-icon left>print</v-icon>
                             Cetak
                         </v-btn>  
                     </div>
