@@ -57,12 +57,12 @@ class ProductController extends Controller
             $image = $request->file('image');
 
             if (is_null($name)) {
-                $name = time() . "_" . rand(1000) . "." . $image->getClientOriginalExtension();
+                $name = time() . "_" . rand(1000, 1000000) . "." . $image->getClientOriginalExtension();
             }
 
             $image->move(public_path('images'), $name);
 
-            return 'images/'.$name;
+            return '/images/'.$name;
         }
 
         return '';
