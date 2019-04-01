@@ -129,7 +129,7 @@
                 </v-card>
             </v-dialog>
             <div id="nota" v-show="false">
-                <div>
+                <div v-for="n in 2" :key="`nota-${n}`">
                     <p class="title text-xs-center">PL Food Bazaar</p>
                     <div>
                         <div>No Nota: {{ nota.id }}</div>
