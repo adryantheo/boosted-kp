@@ -31,7 +31,9 @@
 
                 <p v-show="!!errorText" class="red--text">{{ errorText }}</p>
 
-                <v-btn color="primary" flat @click="pickFile">Upload Gambar</v-btn>
+                <v-btn color="primary" flat @click="pickFile" v-if="!!productId">
+                    Upload Gambar
+                </v-btn>
                 
                 <input type="file"
                     ref="file"
@@ -167,10 +169,12 @@ export default {
                             }
                         });
                     } else {
-                        const res = await axios.patch(`/api/products/${this.productId}`, data, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
+                        const res = await axios.patch(`/api/products/${this.productId}`, {
+                            name: this.name,
+                            description: this.description,
+                            units: this.stock,
+                            price: this.price,
+                            stand_id: this.stand
                         });
                     }
                     this.$emit('create_success');   
