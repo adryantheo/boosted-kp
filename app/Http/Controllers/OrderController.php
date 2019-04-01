@@ -34,14 +34,12 @@ class OrderController extends Controller
             'Nota' => function($query)
             {
                 $query->select('id','customer');
-
             },
             'Product'=> function($query){
                 $query->withTrashed();
-                
             },
             'Product.Stand'=>function($query){
-               
+                $query->withTrashed();
                 $query->select('id', 'name');
             }
             
