@@ -140,8 +140,11 @@
                     <table style="width: 100%;">
                         <template v-for="(item, i) in nota.order">
                             <tr :key="`nt1-${i}`">
-                                <td colspan="2">
+                                <td>
                                     {{ item.product.name }}
+                                </td>
+                                <td>
+                                    Stand {{ item.product.stand.name }}
                                 </td>
                             </tr>
                             <tr :key="`nt2-${i}`">
@@ -258,9 +261,9 @@ export default {
             this.loading = false;
         },
         closeDialog() {
+            this.step = 1;
             this.cartDialog = false;
             this.ordererName = "";
-            this.step = 1;
         },
         toPayment() {
             this.step++;
