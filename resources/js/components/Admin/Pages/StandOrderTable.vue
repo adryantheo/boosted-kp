@@ -135,7 +135,9 @@ export default {
             this.loading = true;
             try {
                 const res = await this.fetchStandOrders();
-                this.items = res.data.map(item => ({
+                let tes = res.data.filter(item => !!item.product);
+
+                this.items = tes.map(item => ({
                     id: item.id,
                     date: item.created_at,
                     menu: item.product.name,
@@ -144,6 +146,9 @@ export default {
                     qty: item.quantity,
                     total: (item.quantity * item.harga_satuan)
                 }));
+
+                console.log(this.items);
+                
             } catch (err) {
                 console.log(err);
             }
