@@ -14,15 +14,38 @@ class OrderController extends Controller
             return response()->json(
                 Order::with([
                     'Nota:id,customer',
-                    'Product' => function($query) use ($request) {
+                    'Product'=> function($query) use ($request) {
+                        
                         $query->where('stand_id', '=', $request->input('stand'));
                         $query->select('id', 'name');
+                        $query->withTrashed();
+                        
                     }
                 ])->get()
             );
         }
 
         return response()->json(Order::with(['Nota:id,customer', 'Product:id,name'])->get(),200);
+    }
+
+    public function all()
+    {
+        return response()->json(Order::with([
+            'Nota' => function($query)
+            {
+                $query->select('id','customer');
+
+            },
+            'Product'=> function($query){
+                $query->withTrashed();
+                
+            },
+            'Product.Stand'=>function($query){
+               
+                $query->select('id', 'name');
+            }
+            
+            ])->get(),200);
     }
 
     

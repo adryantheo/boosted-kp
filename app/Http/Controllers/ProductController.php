@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductController extends Controller
 {
@@ -34,6 +35,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'image' => $this->uploadImage($request),
             'stand_id' => $request->stand_id
+            
             
         ]);
 

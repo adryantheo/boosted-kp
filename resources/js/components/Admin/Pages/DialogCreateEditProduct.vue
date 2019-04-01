@@ -31,7 +31,7 @@
 
                 <p v-show="!!errorText" class="red--text">{{ errorText }}</p>
 
-                <v-btn color="primary" flat @click="pickFile" v-if="!!productId">
+                <v-btn color="primary" flat @click="pickFile" v-if="!productId">
                     Upload Gambar
                 </v-btn>
                 
