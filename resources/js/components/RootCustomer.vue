@@ -225,16 +225,36 @@ export default {
             // this.$htmlToPaper('nota');
             this.loading = true;
             try {
-                let res = await this.makeOrder(this.ordererName);
-                let print = await axios.get(`/api/nota/${res.data.nota_id}`);
-                this.nota = print.data;
-                console.log(this.nota);
+                const willOrder = await swal({
+                    title: "Yakin ingin memesan?",
+                    icon: "warning",
+                    closeOnClickOutside: false,
+                    buttons: {
+                        cancel: {
+                            text: "TIDAK",
+                            value: false,
+                            visible: true,
+                            closeModal: true,
+                        },
+                        confirm: {
+                            text: "YA",
+                            value: true,
+                            visible: true,
+                            closeModal: true
+                        }
+                    }
+                })
+                if(willOrder) {
+                    let res = await this.makeOrder(this.ordererName);
+                    let print = await axios.get(`/api/nota/${res.data.nota_id}`);
+                    this.nota = print.data;
+                    this.closeDialog();
+                    this.bisaPrint = true;
+                }
             } catch (err) {
                 alert("Pesanan gagal dibuat!");
                 console.log(err);
             }
-            this.closeDialog();
-            this.bisaPrint = true;
             this.loading = false;
         },
         closeDialog() {
