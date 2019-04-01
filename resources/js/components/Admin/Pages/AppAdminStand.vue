@@ -27,11 +27,6 @@
             </v-flex>
             <v-flex xs12 md6 xl4 v-for="(item, i) in stands" :key="`prod-${i}`">
                 <v-card class="rounded" height="100%">
-                    <v-img
-                    src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-                    height="180"
-                    ></v-img>
-
                     <v-card-title>
                         <span class="headline">{{ item.name }}</span>
                     </v-card-title>
