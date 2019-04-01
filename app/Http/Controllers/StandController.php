@@ -17,7 +17,7 @@ class StandController extends Controller
         return response()->json(
             Stand::with([
                 'Products'
-                ])->withTrashed()
+            ])
             ->get(),200);
     }
 
