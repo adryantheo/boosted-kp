@@ -12,22 +12,13 @@ use Illuminate\Support\Facades\DB;
 class NotaController extends Controller
 {
 
-    /**
-     * Retrieve list of all transactions.
-     *
-     * @return JsonResponse
-     */
+   
     public function index()
     {
         return response()->json(Nota::with(['Order', 'Order.Product:id,name'])->get(),200);
     }
 
-    /**
-     * Store a new transaction to storage.
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
+   
     public function store(Request $request)
     {
         $nota = null;
@@ -61,25 +52,18 @@ class NotaController extends Controller
         ]);
     }
 
-    /**
-     * Get a transaction detail from storage.
-     *
-     * @param Nota $nota
-     * @return JsonResponse
-     */
+  
     public function show(Nota $nota)
     {
-        return response()->json($nota::with(['Order', 'Order.Product:id,name,stand_id'])
+        return response()->json(
+            $nota::with([
+                'Order',
+                'Order.Product.Stand:id,name',                           
+                ])
         ->where('id', '=', $nota->id)->first());
     }
 
-    /**
-     * Update a transaction from storage.
-     *
-     * @param Request $request
-     * @param Nota $nota
-     * @return JsonResponse
-     */
+   
     public function update(Request $request, Nota $nota)
     {
         $status = $nota->update(
@@ -92,13 +76,7 @@ class NotaController extends Controller
         ]);
     }
 
-    /**
-     * Delete a transaction from storage.
-     *
-     * @param Nota $nota
-     * @return JsonResponse
-     * @throws \Exception
-     */
+  
     public function destroy(Nota $nota)
     {
         $status = $nota->delete();
