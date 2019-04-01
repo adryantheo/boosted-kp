@@ -14,7 +14,11 @@ class StandController extends Controller
    
     public function index()
     {
-        return response()->json(Stand::with('Products')->get(),200);
+        return response()->json(
+            Stand::with([
+                'Products'
+                ])->withTrashed()
+            ->get(),200);
     }
 
     
