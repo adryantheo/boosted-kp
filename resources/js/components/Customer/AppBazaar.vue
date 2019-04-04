@@ -3,19 +3,14 @@
         <v-parallax
             dark
             src="/assets/main-bg.png"
-            height="600"
+            height="700"
         >
-            <v-layout align-center>
-                <v-flex xs4 lg3 class="pa-4">
-                    <v-img
-                        src="https://seeklogo.com/images/R/restaurant-chief-food-hotel-logo-9DE9D03812-seeklogo.com.png"
-                        max-height="200" contain
-                    ></v-img>
-                </v-flex>
-                <v-flex>
-                    <h1 class="display-3 mb-3">PL Food Bazaar</h1>
-                    <h4 class="display-1 font-weight-light">Enjoy homemade foods today!</h4>
-                </v-flex>
+            <v-layout align-center justify-center>
+                <v-img
+                    src="/assets/svg/logo.svg"
+                    max-height="500" contain
+                    position="center center"
+                ></v-img>
             </v-layout>
         </v-parallax>
         <v-container grid-list-lg class="my-5">
