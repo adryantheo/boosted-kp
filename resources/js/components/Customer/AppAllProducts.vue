@@ -51,7 +51,7 @@ export default {
         ]),
         getFilteredProducts() {
             if(!!this.querySearch) {
-                return this.products.filter((item) => item.name.toLowerCase().replace(/ /g,'').indexOf(this.querySearch) >= 0);
+                return this.products.filter((item) => item.name.toLowerCase().replace(/ /g,'').indexOf(this.querySearch.toLowerCase()) >= 0);
             } else {
                 return this.products;
             }
