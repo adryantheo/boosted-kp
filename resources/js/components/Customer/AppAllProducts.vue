@@ -11,8 +11,21 @@
 
         <v-divider class="my-4"></v-divider>
 
+        <v-layout row wrap justify-center>
+            <v-flex xs12 sm8 lg6>
+                <v-text-field
+                    solo
+                    label="Cari produk"
+                    clearable
+                    v-model="querySearch"
+                >
+                    <v-icon>search</v-icon>
+                </v-text-field>
+            </v-flex>
+        </v-layout>
+
         <v-layout row wrap>
-            <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in products" :key="`produk-${id}`">
+            <v-flex xs12 sm6 md4 lg3 v-for="(item, id) in getFilteredProducts" :key="`produk-${id}`">
                 <product-card :item="item"></product-card>
             </v-flex>
         </v-layout>
@@ -29,12 +42,20 @@ export default {
     data() {
         return {
             products: [],
+            querySearch: "",
         }
     },
     computed: {
         ...mapGetters([
             'getCartItems'
         ]),
+        getFilteredProducts() {
+            if(!!this.querySearch) {
+                return this.products.filter((item) => item.name.toLowerCase().replace(/ /g,'').indexOf(this.querySearch) >= 0);
+            } else {
+                return this.products;
+            }
+        },
     },
     methods: {
         async getProducts() {

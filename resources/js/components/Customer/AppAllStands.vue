@@ -11,8 +11,21 @@
 
         <v-divider class="my-4"></v-divider>
         
+        <v-layout row wrap justify-center>
+            <v-flex xs12 sm8 lg6>
+                <v-text-field
+                    solo
+                    label="Cari stand"
+                    clearable
+                    v-model="querySearch"
+                >
+                    <v-icon>search</v-icon>
+                </v-text-field>
+            </v-flex>
+        </v-layout>
+
         <v-layout row wrap>
-            <v-flex xs12 md6 xl4 v-for="(item, id) in stands" :key="`stand-${id}`">
+            <v-flex xs12 md6 xl4 v-for="(item, id) in getFilteredStands" :key="`stand-${id}`">
                 <stand-card :item="item"></stand-card>
             </v-flex>
         </v-layout>
@@ -28,7 +41,23 @@ export default {
     data() {
         return {
             stands: [],
+            querySearch: "",
         }
+    },
+    computed: {
+        getFilteredStands() {
+            if(!!this.querySearch) {
+                return this.stands.filter((item) => {
+                    const hasName = item.name.toLowerCase().replace(/ /g,'').indexOf(this.querySearch) >= 0
+
+                    const hasDesc = item.description.toLowerCase().replace(/ /g,'').indexOf(this.querySearch) >= 0
+                    
+                    return (hasName || hasDesc);
+                });
+            } else {
+                return this.stands;
+            }
+        },
     },
     methods: {
         async getStands() {
