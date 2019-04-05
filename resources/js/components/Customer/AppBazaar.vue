@@ -8,7 +8,7 @@
             <v-layout align-center justify-center>
                 <v-img
                     src="/assets/svg/logo.svg"
-                    max-height="500" contain
+                    max-height="700" contain
                     position="center center"
                 ></v-img>
             </v-layout>

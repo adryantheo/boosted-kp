@@ -129,7 +129,7 @@
                 </v-card>
             </v-dialog>
             <div id="nota" v-show="false">
-                <div v-for="n in 2" :key="`nota-${n}`">
+                <div v-for="n in 2" :key="`nota-${n}`" class="mb-5">
                     <p class="title text-xs-center">PL Food Bazaar</p>
                     <div>
                         <div>No Nota: {{ nota.id }}</div>
@@ -164,6 +164,14 @@
                         <td class="text-xs-right">{{ $rupiahFormat(getSubtotalNota) }}</td>
                         </tr>
                     </table>
+                    <v-divider class="my-2"></v-divider>
+                    <br><br>
+                    <div class="text-xs-center subheading">
+                        Terima kasih
+                    </div>
+                    <br><br>
+                    <hr style="border-top: dotted 1px;" />
+                    <br><br>
                 </div>
             </div>
             <v-fab-transition>
