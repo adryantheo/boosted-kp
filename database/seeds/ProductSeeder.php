@@ -15,7 +15,7 @@ class ProductSeeder extends Seeder
                 'name' => $faker->name,
                 'description' => $faker->name,
                 'units' => $faker->numberBetween(10,20),
-                'stand_id' => $faker->numberBetween(2,6),
+                'brand_id' => $faker->numberBetween(2,6),
                 'price' => $faker->randomNumber(2),
                 'image' => $faker->imageUrl($width = 640, $height = 480),
             ]);

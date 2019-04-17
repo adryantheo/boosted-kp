@@ -14,13 +14,13 @@ class Product extends Model
         'units',
         'description',
         'image',
-        'stand_id'
+        'brand_id'
     ];
     
    
 
-    public function Stand(){
-        return $this->belongsTo(Stand::class, 'stand_id');
+    public function Brand(){
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
     
 }

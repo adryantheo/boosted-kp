@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class Stand extends Model
+class Brand extends Model
 {
     use SoftDeletes;
     protected $fillable = [
