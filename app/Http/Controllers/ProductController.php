@@ -62,9 +62,9 @@ class ProductController extends Controller
                 $name = time() . "_" . rand(1000, 1000000) . "." . $image->getClientOriginalExtension();
             }
 
-            $image->move(public_path('images'), $name);
+            $image->move(public_path('storage/product'), $name);
 
-            return '/images/'.$name;
+            return '/storage/product/'.$name;
         }
 
         return '';

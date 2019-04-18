@@ -32,7 +32,7 @@
                 <p v-show="!!errorText" class="red--text">{{ errorText }}</p>
 
                 <v-btn color="primary" flat @click="pickFile" v-if="!productId">
-                    Upload Gambar
+                    Unggah Gambar
                 </v-btn>
                 
                 <input type="file"
@@ -117,6 +117,8 @@ export default {
 
         fileUrl: '',
         fileBin: '',
+        errorText: '',
+        maxSize: 2048,
         name: null,
         size: null,
         description: null,
@@ -129,9 +131,6 @@ export default {
             notZero: v => v > 0 || 'Tidak boleh kurang dari 1',
             tooMuch: v => v < 999999 || 'Nilai terlalu besar!',
         },
-
-        errorText: '',
-        maxSize: 2048,
     }),
     methods: {
         pickFile(){
@@ -166,7 +165,9 @@ export default {
                 data.append(`price`, this.price); 
                 data.append(`units`, this.stock);
                 data.append(`description`, this.description);
-                data.append(`image`, this.fileBin); 
+                if(!!this.fileBin) {
+                    data.append(`image`, this.fileBin);
+                }
                 data.append(`brand_id`, this.brand); 
                 
                 try {
@@ -194,7 +195,7 @@ export default {
     },
     async mounted() {
         if(!!this.productId) {
-            const res = await axios.get(`/api/products/${this.productId}`)
+            const res = await axios.get(`/api/products/${this.productId}`);
             this.fileUrl = res.data.image;
             this.name = res.data.name;
             this.description = res.data.description;
