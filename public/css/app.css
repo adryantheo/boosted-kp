@@ -6,13 +6,13 @@
   border-radius: 10px !important;
 }
 
-.menu-card {
+.sepatu-card {
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
 }
 
-.menu-card .menu-img {
+.sepatu-card .sepatu-img {
   border-radius: 10px 10px 0 0 !important;
 }
 
