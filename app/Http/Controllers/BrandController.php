@@ -27,8 +27,7 @@ class BrandController extends Controller
         $brand = Brand::create([
             'name' => $request->name,
             'description' => $request->description,
-            
-                       
+            'image' => $this->uploadImage($request),
         ]);
 
         return response()->json([
@@ -38,6 +37,29 @@ class BrandController extends Controller
         ]);
     }
 
+    /**
+     * Handle an image upload.
+     *
+     * @param Request $request
+     * @param null $name
+     * @return string
+     */
+    public function uploadImage(Request $request, $name = null)
+    {
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+
+            if (is_null($name)) {
+                $name = time() . "_" . rand(1000, 1000000) . "." . $image->getClientOriginalExtension();
+            }
+
+            $image->move(public_path('storage/brand'), $name);
+
+            return '/storage/brand/'.$name;
+        }
+
+        return '';
+    }
     
     public function show(Brand $brand)
     {
@@ -47,14 +69,14 @@ class BrandController extends Controller
 
     public function update(Request $request, Brand $brand)
     {
-        $status = $brand->update(
-            $request->only(['name', 'description'])
-        );
+        $data = $request->only(['name', 'description']);
+        
+        $status = $brand->update($data);
 
         return response()->json([
             'status' => $status,
             'message' => $status ? 'Brand Updated!' : 'Error Updating Brand'
-        ]);
+        ], 200);
     }
 
 
@@ -63,9 +85,9 @@ class BrandController extends Controller
     {
         $status = $brand->delete();
 
-            return response()->json([
-                'status' => $status,
-                'message' => $status ? 'Brand Deleted!' : 'Error Deleting Brand'
-            ]);
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Brand Deleted!' : 'Error Deleting Brand'
+        ]);
     }
 }

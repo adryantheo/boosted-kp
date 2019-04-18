@@ -14,6 +14,7 @@ class BrandsTableSeeder extends Seeder
             Brand::create([
                 'name' => $faker->name,
                 'description' => $faker->name,
+                'image' => $faker->imageUrl($width = 800, $height = 480),
             ]);
     }
 }
