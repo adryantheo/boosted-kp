@@ -27,6 +27,10 @@
             </v-flex>
             <v-flex xs12 md6 xl4 v-for="(item, i) in brands" :key="`prod-${i}`">
                 <v-card class="rounded" height="100%">
+                    <v-img
+                    :src="item.image"
+                    height="180"
+                    ></v-img>
                     <v-card-title>
                         <span class="headline">{{ item.name }}</span>
                     </v-card-title>

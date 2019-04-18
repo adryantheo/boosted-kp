@@ -2,7 +2,8 @@
     <div>
         <v-parallax
             dark
-            src="/assets/brands_bg.jpg"
+            v-if="!!cover"
+            :src="cover"
             height="300"
         >
         </v-parallax>
@@ -48,8 +49,9 @@ export default {
     },
     data() {
         return {
-            name: "",
-            description: "",
+            name: null,
+            description: null,
+            cover: null,
             brandProducts: [],
         }
     },
@@ -63,6 +65,7 @@ export default {
             const res = await axios.get(`/api/brands/${this.brand}`);
             const brand = res.data;
             this.name = brand.name;
+            this.cover = brand.image;
             this.description = brand.description;
             this.brandProducts = brand.products.map((item) => {
                 let q = 0;

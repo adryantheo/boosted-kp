@@ -4,7 +4,7 @@
         :to="`/brands/${item.id}`" height="100%"
     >
         <v-img
-        src="/assets/stand_placeholder.jpg"
+        :src="item.image"
         height="180"
         ></v-img>
 
