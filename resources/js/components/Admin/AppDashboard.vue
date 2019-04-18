@@ -11,7 +11,7 @@
                     v-for="(item, index) in routes"
                     router
                     :to="item.route"
-                    :key="'menu'+index"
+                    :key="'sepatu'+index"
                     >
                     <v-list-tile-action>
                         <v-icon>{{ item.icon }}</v-icon>

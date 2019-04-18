@@ -5,7 +5,7 @@
                 <v-icon>arrow_back</v-icon>
             </v-btn>
             <div class="ml-4 headline font-weight-bold">
-                Semua Menu
+                Semua Sepatu
             </div>
         </v-layout>
 

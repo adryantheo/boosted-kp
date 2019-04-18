@@ -1,7 +1,7 @@
 <template>
-    <v-card class="rounded menu-card" height="100%">
+    <v-card class="rounded sepatu-card" height="100%">
         <div>
-        <v-img class="menu-img"
+        <v-img class="sepatu-img"
         :src="item.image"
         :aspect-ratio="16/9"
         ></v-img>

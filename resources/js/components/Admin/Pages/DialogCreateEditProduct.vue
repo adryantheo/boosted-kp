@@ -2,7 +2,7 @@
     <v-card>
         <v-toolbar color="transparent" flat>
             <v-toolbar-title class="headline">
-                {{ !!productId? 'Ubah Menu' : 'Menu Baru'}}
+                {{ !!productId? 'Ubah Sepatu' : 'Sepatu Baru'}}
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon @click="$emit('close')">
@@ -17,11 +17,11 @@
                 indeterminate
             ></v-progress-circular>
         </v-card-text>
-        <v-form ref="form_new_menu" @submit.prevent="createNewMenu"
+        <v-form ref="form_new_sepatu" @submit.prevent="createNewSepatu"
         v-show="!dialogLoading">
             <v-card-text class="text-xs-center">
                 <v-slide-y-transition>
-                <v-img class="menu-img"
+                <v-img class="sepatu-img"
                     v-if="!!fileUrl"
                     :src="fileUrl"
                     max-height="200px"
@@ -38,8 +38,7 @@
                 <input type="file"
                     ref="file"
                     name="thumbnail"
-                    @change="onFileChange(
-                        $event.target.name, $event.target.files)"
+                    @change="onFileChange($event.target.name, $event.target.files)"
                     style="display:none">
             </v-card-text>
             <v-card-text>
@@ -47,7 +46,7 @@
                 <v-layout row wrap>
                     <v-flex xs12>
                         <v-text-field
-                            label="Nama menu"
+                            label="Nama sepatu"
                             v-model="name"
                             :rules="[rules.required]"
                             ref="name"
@@ -55,7 +54,7 @@
                     </v-flex>
                     <v-flex xs12>
                         <v-textarea
-                            label="Deskripsi menu"
+                            label="Deskripsi sepatu"
                             v-model="description"
                             :rules="[rules.required]" 
                             rows="3"
@@ -111,6 +110,7 @@ export default {
         fileUrl: '',
         fileBin: '',
         name: null,
+        size: null,
         description: null,
         stock: null,
         price: null,
@@ -150,8 +150,8 @@ export default {
                 }
             }
         },
-        async createNewMenu() {
-            if(this.$refs.form_new_menu.validate()) {
+        async createNewSepatu() {
+            if(this.$refs.form_new_sepatu.validate()) {
                 this.btnLoading = true;
                 const data = new FormData();
                 data.append(`name`, this.name); 

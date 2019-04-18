@@ -21,7 +21,7 @@
             <v-divider class="my-4"></v-divider>
 
             <p class="subheading font-weight-bold">
-                Daftar Menu
+                Daftar Sepatu
             </p>
             <v-layout row wrap>
                 <v-flex xs12 md4 lg3  v-for="(item, i) in brandProducts" :key="`am-${i}`">

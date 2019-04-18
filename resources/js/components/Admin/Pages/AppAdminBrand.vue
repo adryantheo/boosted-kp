@@ -34,7 +34,7 @@
                         {{ item.description }}
                     </v-card-text>
                     <v-card-text class="font-weight-bold blue--text">
-                        {{ item.products.length }} MENU
+                        {{ item.products.length }} PRODUK
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>

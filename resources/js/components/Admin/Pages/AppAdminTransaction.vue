@@ -65,7 +65,7 @@
                             <td>{{ props.item.id }}</td>
                             <td>{{ props.item.date }}</td>
                             <td>{{ props.item.brand }}</td>
-                            <td>{{ props.item.menu }}</td>
+                            <td>{{ props.item.sepatu }}</td>
                             <td>{{ props.item.customer }}</td>
                             <td class="text-xs-right">{{ props.item.qty }}</td>
                             <td class="text-xs-right">{{ $rupiahFormat(props.item.price) }}</td>
@@ -89,7 +89,7 @@
                             <th>Id order</th>
                             <th>Tanggal order</th>
                             <th>Brand</th>
-                            <th>Menu</th>
+                            <th>Sepatu</th>
                             <th>Pelanggan</th>
                             <th>Jumlah</th>
                             <th>Harga</th>
@@ -100,7 +100,7 @@
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.date }}</td>
                                 <td>{{ item.brand }}</td>
-                                <td>{{ item.menu }}</td>
+                                <td>{{ item.sepatu }}</td>
                                 <td>{{ item.customer }}</td>
                                 <td class="text-xs-right">{{ item.qty }}</td>
                                 <td class="text-xs-right">{{ $rupiahFormat(item.price) }}</td>
@@ -131,7 +131,7 @@ export default {
             { text: 'ID', value: 'id', sortable: false },
             { text: 'Tgl order', value: 'date' },
             { text: 'Nama brand', value: 'brand'},
-            { text: 'Nama menu', value: 'menu', sortable: false  },
+            { text: 'Nama sepatu', value: 'sepatu', sortable: false  },
             { text: 'Pelanggan', value: 'customer', sortable: false },
             { text: 'Jumlah', value: 'qty' },
             { text: 'Harga', value: 'price' },
@@ -160,7 +160,7 @@ export default {
                     id: item.id,
                     date: item.created_at,
                     brand: item.product.brand.name,
-                    menu: item.product.name,
+                    sepatu: item.product.name,
                     customer: item.nota.customer,
                     price: item.harga_satuan,
                     qty: item.quantity,

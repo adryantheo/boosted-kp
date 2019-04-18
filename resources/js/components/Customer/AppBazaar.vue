@@ -69,9 +69,9 @@
 
             <div class="my-5"></div>
 
-            <!-- Random Menu -->
+            <!-- Random Sepatu -->
             <v-layout justify-space-between align-center>
-                <div class="headline font-weight-bold">Daftar Menu</div>
+                <div class="headline font-weight-bold">Daftar Sepatu</div>
                 <v-btn color="primary" @click="loadRandomProduct" :loading="randomProductLoading">
                     <v-icon left>replay</v-icon>
                     Muat lain
@@ -111,7 +111,7 @@
                         </v-flex>
                         <v-flex xs12 lg6>
                             <v-card-text class="display-1 primary--text font-weight-light text-xs-center text-lg-left">
-                                Lihat Semua Menu!
+                                Lihat Semua Sepatu!
                             </v-card-text>
                         </v-flex>
                     </v-layout>

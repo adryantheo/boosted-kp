@@ -15,7 +15,7 @@
             {{ item.description }}
         </v-card-text>
         <v-card-text class="title blue--text">
-            {{ item.products.length }} MENU
+            {{ item.products.length }} PRODUK
         </v-card-text>
     </v-card>
 </template>

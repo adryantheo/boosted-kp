@@ -39,19 +39,19 @@
                 <v-container grid-list-lg>
                     <v-layout row align-center class="mt-2 mb-3">
                         <div class="subheading font-weight-bold">
-                            Daftar Menu
+                            Daftar Sepatu
                         </div>
                         <v-spacer></v-spacer>
                         <v-btn color="primary" @click="openProductDialog">
                             <v-icon left>add</v-icon>
-                            menu baru
+                            sepatu baru
                         </v-btn>
                     </v-layout>
                     <v-layout row wrap>
                         <v-flex xs12 md6 lg4 v-for="(item, i) in brandProducts" :key="`am-${i}`">
-                            <v-card class="rounded menu-card" height="100%">
+                            <v-card class="rounded sepatu-card" height="100%">
                                 <div>
-                                <v-img class="menu-img"
+                                <v-img class="sepatu-img"
                                 :src="item.image"
                                 :aspect-ratio="16/9"
                                 ></v-img>
@@ -138,7 +138,7 @@ export default {
     data: () => ({
         activeTab: null,
         tabItems: [
-            {name: "Daftar Menu", icon: "local_dining"},
+            {name: "Daftar Sepatu", icon: "local_dining"},
             {name: "Riwayat Order", icon: "receipt"},
         ],
 
