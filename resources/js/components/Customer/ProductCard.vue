@@ -7,7 +7,7 @@
         ></v-img>
         
         <v-card-text class="text">
-            <p class="title font-weight-regular">{{ item.name }} ({{ item.size }})</p>
+            <p class="title font-weight-regular">{{ item.name }} ({{ item.gender }} {{ item.size }})</p>
             <p class="subheading">{{ $rupiahFormat(item.price) }}</p>
             <div class="title blue--text" v-if="item.units > 0">Sisa {{ item.units }}</div>
             <div class="title red--text text-uppercase" v-else>habis!</div>

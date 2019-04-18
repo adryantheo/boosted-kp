@@ -18,6 +18,7 @@ class ProductSeeder extends Seeder
                 'brand_id' => $faker->numberBetween(2,6),
                 'price' => $faker->randomNumber(2),
                 'size' => $faker->numberBetween(35,50),
+                'gender' => $faker->randomElement(['M' ,'F']),
                 'image' => $faker->imageUrl($width = 640, $height = 480),
             ]);
         }

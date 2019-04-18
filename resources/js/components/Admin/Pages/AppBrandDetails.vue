@@ -57,7 +57,7 @@
                                 ></v-img>
 
                                 <v-card-text>
-                                    <p class="title font-weight-regular">{{ item.name }} ({{item.size}})</p>
+                                    <p class="title font-weight-regular">{{ item.name }} ({{ item.gender }} {{item.size}})</p>
                                     <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
                                     <div class="subheading">Sisa {{ item.units }}</div>
                                 </v-card-text>

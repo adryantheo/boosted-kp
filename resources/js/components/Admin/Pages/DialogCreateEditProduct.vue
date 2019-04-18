@@ -52,13 +52,22 @@
                             ref="name"
                         ></v-text-field>
                     </v-flex>
-                    <v-flex xs12 md4>
+                    <v-flex xs12 md2>
                         <v-text-field
-                            label="Ukuran sepatu"
+                            label="Ukuran"
                             v-model.number="size"
                             :rules="[rules.required, rules.notZero]"
                             ref="name"
                         ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md2>
+                        <v-select
+                            :items="shoeGenders"
+                            v-model="gender"
+                            item-text="name"
+                            item-value="key"
+                            label="label"
+                        ></v-select>
                     </v-flex>
                     <v-flex xs12>
                         <v-textarea
@@ -121,6 +130,11 @@ export default {
         maxSize: 2048,
         name: null,
         size: null,
+        gender: null,
+        shoeGenders: [
+            { key: 'M', name: "Male" },
+            { key: 'F', name: "Female" },
+        ],
         description: null,
         stock: null,
         price: null,
@@ -165,6 +179,7 @@ export default {
                 data.append(`price`, this.price); 
                 data.append(`units`, this.stock);
                 data.append(`size`, this.size);
+                data.append(`gender`, this.gender);
                 data.append(`description`, this.description);
                 if(!!this.fileBin) {
                     data.append(`image`, this.fileBin);

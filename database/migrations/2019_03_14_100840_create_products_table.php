@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
             $table->string('description');
             $table->unsignedInteger('units')->default(0);
             $table->unsignedInteger('size')->default(0);
+            $table->string('gender');
             $table->string('image');
             $table->unsignedInteger('brand_id');
             $table->double('price');
