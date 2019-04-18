@@ -52,7 +52,7 @@
                             ref="name"
                         ></v-text-field>
                     </v-flex>
-                    <v-flex xs12 md2>
+                    <v-flex xs12 sm6 md2>
                         <v-text-field
                             label="Ukuran"
                             v-model.number="size"
@@ -60,7 +60,7 @@
                             ref="name"
                         ></v-text-field>
                     </v-flex>
-                    <v-flex xs12 md2>
+                    <v-flex xs12 sm6 md2>
                         <v-select
                             :items="shoeGenders"
                             v-model="gender"

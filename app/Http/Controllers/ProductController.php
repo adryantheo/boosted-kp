@@ -33,6 +33,8 @@ class ProductController extends Controller
             'description' => $request->description,
             'units' => $request->units,
             'price' => $request->price,
+            'size' => $request->size,
+            'gender' => $request->gender,
             'image' => $this->uploadImage($request),
             'brand_id' => $request->brand_id
             
