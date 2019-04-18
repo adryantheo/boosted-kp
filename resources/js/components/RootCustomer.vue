@@ -144,7 +144,7 @@
                                     {{ item.product.name }}
                                 </td>
                                 <td>
-                                    Stand {{ item.product.stand.name }}
+                                    Brand {{ item.product.brand.name }}
                                 </td>
                             </tr>
                             <tr :key="`nt2-${i}`">

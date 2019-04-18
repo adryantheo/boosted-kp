@@ -12,11 +12,11 @@
         </v-layout>
         <div v-show="!loading">
             <v-layout row align-center>
-                <v-btn fab dark color="primary" to="/admin/stands">
+                <v-btn fab dark color="primary" to="/admin/brands">
                     <v-icon>arrow_back</v-icon>
                 </v-btn>
                 <div class="ml-4">
-                    <div class="headline font-weight-bold mb-1">Stand {{ name }}</div>
+                    <div class="headline font-weight-bold mb-1">Brand {{ name }}</div>
                     <div class="subheading">{{ description }}</div>
                 </div>
             </v-layout>
@@ -48,7 +48,7 @@
                         </v-btn>
                     </v-layout>
                     <v-layout row wrap>
-                        <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
+                        <v-flex xs12 md6 lg4 v-for="(item, i) in brandProducts" :key="`am-${i}`">
                             <v-card class="rounded menu-card" height="100%">
                                 <div>
                                 <v-img class="menu-img"
@@ -84,7 +84,7 @@
                             @close="closeProduct" 
                             @create_success="reloadProduct"
                             :productId="parseInt(productId)" 
-                            :stand="parseInt(stand)"
+                            :brand="parseInt(brand)"
                             :key="dialogCreateEditProductKey">
                         </dialog-create-edit-product>
                     </v-dialog>
@@ -107,10 +107,10 @@
                         </v-btn>
                     </v-layout>
                     <v-layout row wrap>
-                        <stand-order-table
-                            :standName="name"
-                            :standId="stand"
-                        ></stand-order-table>
+                        <brand-order-table
+                            :brandName="name"
+                            :brandId="brand"
+                        ></brand-order-table>
                     </v-layout>
                 </v-container>
                 </v-tab-item>
@@ -122,15 +122,15 @@
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
 import DialogCreateEditProduct from './DialogCreateEditProduct'
-import StandOrderTable from './StandOrderTable'
+import BrandOrderTable from './BrandOrderTable'
 
 export default {
     components: {
         DialogCreateEditProduct,
-        StandOrderTable,
+        BrandOrderTable,
     },
     props: {
-        stand: {
+        brand: {
             type: String,
             required: true,
         },
@@ -147,7 +147,7 @@ export default {
         reloadLoading: false,
         name: "",
         description: "",
-        standProducts: [],
+        brandProducts: [],
         dialogCreateEditProduct: false,
         dialogCreateEditProductKey: 0,
     }),
@@ -161,17 +161,17 @@ export default {
             addToCartVuex: 'addToCart',
             removeFromCartVuex: 'removeFromCart',
         }),
-        fetchStandDetails() {
-            return axios.get(`/api/stands/${this.stand}`);
+        fetchBrandDetails() {
+            return axios.get(`/api/brands/${this.brand}`);
         },
-        async getStandDetails() {
+        async getBrandDetails() {
             this.loading = true;
             try {
-                const res = await this.fetchStandDetails();
-                const stand = res.data;
-                this.name = stand.name;
-                this.description = stand.description;
-                this.standProducts = stand.products.reverse();
+                const res = await this.fetchBrandDetails();
+                const brand = res.data;
+                this.name = brand.name;
+                this.description = brand.description;
+                this.brandProducts = brand.products.reverse();
             } catch (err) {
                 console.log(err);
             }    
@@ -191,7 +191,7 @@ export default {
                 try {
                     const res = await axios.delete(`/api/products/${id}`, null);
                     console.log(res.data);
-                    this.getStandDetails();
+                    this.getBrandDetails();
                 } catch (err) {
                     console.log(err);
                 }
@@ -203,7 +203,7 @@ export default {
         },
         reloadProduct() {
             this.closeProduct();
-            this.getStandDetails();
+            this.getBrandDetails();
         },
         reloadOrders() {
             this.reloadLoading = true;
@@ -214,7 +214,7 @@ export default {
         },
     },
     mounted() {
-        this.getStandDetails();
+        this.getBrandDetails();
         EventBus.$on('reload_orders_done',() => {
             this.reloadLoading = false;
         })

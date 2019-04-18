@@ -64,7 +64,7 @@
                         <template v-slot:items="props">
                             <td>{{ props.item.id }}</td>
                             <td>{{ props.item.date }}</td>
-                            <td>{{ props.item.stand }}</td>
+                            <td>{{ props.item.brand }}</td>
                             <td>{{ props.item.menu }}</td>
                             <td>{{ props.item.customer }}</td>
                             <td class="text-xs-right">{{ props.item.qty }}</td>
@@ -81,14 +81,14 @@
             <div class="ma-3">
                 <div class="text-xs-center">
                     <p class="headline">Laporan Riwayat Transaksi</p>
-                    <p class="title">Seluruh Stand</p>
+                    <p class="title">Seluruh Brand</p>
                 </div>
                 <div>
                     <table class="orders">
                         <tr>
                             <th>Id order</th>
                             <th>Tanggal order</th>
-                            <th>Stand</th>
+                            <th>Brand</th>
                             <th>Menu</th>
                             <th>Pelanggan</th>
                             <th>Jumlah</th>
@@ -99,7 +99,7 @@
                             <tr :key="i">
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.date }}</td>
-                                <td>{{ item.stand }}</td>
+                                <td>{{ item.brand }}</td>
                                 <td>{{ item.menu }}</td>
                                 <td>{{ item.customer }}</td>
                                 <td class="text-xs-right">{{ item.qty }}</td>
@@ -130,7 +130,7 @@ export default {
         headers: [
             { text: 'ID', value: 'id', sortable: false },
             { text: 'Tgl order', value: 'date' },
-            { text: 'Nama stand', value: 'stand'},
+            { text: 'Nama brand', value: 'brand'},
             { text: 'Nama menu', value: 'menu', sortable: false  },
             { text: 'Pelanggan', value: 'customer', sortable: false },
             { text: 'Jumlah', value: 'qty' },
@@ -159,7 +159,7 @@ export default {
                 this.items = res.data.map(item => ({
                     id: item.id,
                     date: item.created_at,
-                    stand: item.product.stand.name,
+                    brand: item.product.brand.name,
                     menu: item.product.name,
                     customer: item.nota.customer,
                     price: item.harga_satuan,

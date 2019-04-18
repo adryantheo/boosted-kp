@@ -15,17 +15,17 @@
             <v-flex xs12>
             <v-layout justify-space-between align-center>
                 <v-flex>
-                    <p class="headline primary--text">Semua Stand</p>
+                    <p class="headline primary--text">Semua Brand</p>
                 </v-flex>
                 <v-flex class="text-xs-right">
-                    <v-btn color="primary" @click="openStandDialog">
+                    <v-btn color="primary" @click="openBrandDialog">
                         <v-icon left>add</v-icon>
-                        Stand Baru
+                        Brand Baru
                     </v-btn>
                 </v-flex>
             </v-layout>
             </v-flex>
-            <v-flex xs12 md6 xl4 v-for="(item, i) in stands" :key="`prod-${i}`">
+            <v-flex xs12 md6 xl4 v-for="(item, i) in brands" :key="`prod-${i}`">
                 <v-card class="rounded" height="100%">
                     <v-card-title>
                         <span class="headline">{{ item.name }}</span>
@@ -38,15 +38,15 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="indigo" flat round  :to="`/admin/stands/${item.id}`">
+                        <v-btn color="indigo" flat round  :to="`/admin/brands/${item.id}`">
                             <v-icon left>info</v-icon>
                             detail
                         </v-btn>
-                        <v-btn color="warning" flat round @click="editStand(item.id)">
+                        <v-btn color="warning" flat round @click="editBrand(item.id)">
                             <v-icon left>create</v-icon>
                             edit
                         </v-btn>
-                        <v-btn color="error" flat round @click="deleteStand(item.id)">
+                        <v-btn color="error" flat round @click="deleteBrand(item.id)">
                             <v-icon left>delete</v-icon>
                             delete
                         </v-btn>
@@ -56,77 +56,77 @@
         </v-layout>
         </template>
         <v-dialog
-            v-model="dialogCreateEditStand"
+            v-model="dialogCreateEditBrand"
             persistent max-width="600px"
         >
-            <dialog-create-edit-stand 
-                :standId="parseInt(standId)"
-                @close="closeStand"  
-                @create_success="reloadStand" 
-                :key="dialogCreateEditStandKey">
-            </dialog-create-edit-stand>
+            <dialog-create-edit-brand 
+                :brandId="parseInt(brandId)"
+                @close="closeBrand"  
+                @create_success="reloadBrand" 
+                :key="dialogCreateEditBrandKey">
+            </dialog-create-edit-brand>
         </v-dialog>
     </v-container>
 </template>
 <script>
-import DialogCreateEditStand from './DialogCreateEditStand'
+import DialogCreateEditBrand from './DialogCreateEditBrand'
 
 export default {
     components: {
-        DialogCreateEditStand,
+        DialogCreateEditBrand,
     },
     data: () => ({
-        standId: 0,
+        brandId: 0,
         loading: false,
-        stands: [],
-        dialogCreateEditStand: false,
-        dialogCreateEditStandKey: 0,
+        brands: [],
+        dialogCreateEditBrand: false,
+        dialogCreateEditBrandKey: 0,
     }),
     methods: {
-        fetchStands() {
-            return axios.get('/api/stands')
+        fetchBrands() {
+            return axios.get('/api/brands')
         },
-        async getStands() {
+        async getBrands() {
             this.loading = true;
             try {
-                const res = await this.fetchStands();
-                this.stands = res.data.reverse();
+                const res = await this.fetchBrands();
+                this.brands = res.data.reverse();
             } catch (err) {
                 console.log(err);
             }
             this.loading = false;
         },
-        openStandDialog() {
-            this.dialogCreateEditStandKey = !!this.dialogCreateEditStandKey? 0 : 1;
-            this.dialogCreateEditStand = true;
+        openBrandDialog() {
+            this.dialogCreateEditBrandKey = !!this.dialogCreateEditBrandKey? 0 : 1;
+            this.dialogCreateEditBrand = true;
         },
-        editStand(id) {
-            this.standId = id;
-            this.openStandDialog();
+        editBrand(id) {
+            this.brandId = id;
+            this.openBrandDialog();
         },
-        async deleteStand(id) {
+        async deleteBrand(id) {
             const willDelete = confirm("Anda yakin ingin menghapus?");
             if(willDelete) {
                 try {
-                    const res = await axios.delete(`/api/stands/${id}`, null);
+                    const res = await axios.delete(`/api/brands/${id}`, null);
                     console.log(res.data);
-                    this.getStands();
+                    this.getBrands();
                 } catch (err) {
                     console.log(err);
                 }
             }
         },
-        closeStand() {
-            this.dialogCreateEditStand = false;
-            this.standId = 0;
+        closeBrand() {
+            this.dialogCreateEditBrand = false;
+            this.brandId = 0;
         },
-        reloadStand() {
-            this.closeStand();
-            this.getStands();
+        reloadBrand() {
+            this.closeBrand();
+            this.getBrands();
         }
     },
     mounted() {
-        this.getStands();
+        this.getBrands();
     }
 }
 </script>

@@ -14,10 +14,10 @@
             </v-layout>
         </v-parallax>
         <v-container grid-list-lg class="my-5">
-            <!-- Random Stand -->
+            <!-- Random Brand -->
             <v-layout justify-space-between align-center>
-                <div class="headline font-weight-bold">Daftar Stand</div>
-                <v-btn color="primary" @click="loadRandomStand" :loading="randomStandLoading">
+                <div class="headline font-weight-bold">Daftar Brand</div>
+                <v-btn color="primary" @click="loadRandomBrand" :loading="randomBrandLoading">
                     <v-icon left>replay</v-icon>
                     Muat lain
                 </v-btn>
@@ -25,7 +25,7 @@
             
             <v-divider class="my-3"></v-divider>
 
-            <v-layout column justify-center align-center class="my-5" v-if="randomStandLoading">
+            <v-layout column justify-center align-center class="my-5" v-if="randomBrandLoading">
                 <v-flex>
                     <v-progress-circular
                         :size="70"
@@ -35,17 +35,17 @@
                     ></v-progress-circular>
                 </v-flex>
                 <v-flex class="title font-weight-light">
-                    Memuat stand
+                    Memuat brand
                 </v-flex>
             </v-layout>
             <v-layout row wrap justify-center v-else>
-                <v-flex xs12 md6 lg4 v-for="(item, id) in stands" :key="`stand-${id}`">
-                    <stand-card :item="item"></stand-card>
+                <v-flex xs12 md6 lg4 v-for="(item, id) in brands" :key="`brand-${id}`">
+                    <brand-card :item="item"></brand-card>
                 </v-flex>
-                <v-flex xs12 v-show="!randomStandLoading">
+                <v-flex xs12 v-show="!randomBrandLoading">
                 <v-card class="rounded" hover
                     :ripple="{ class: 'primary--text' }"
-                    to="/stands" height="100%"
+                    to="/brands" height="100%"
                 >
                     <v-card-text style="height: 100%" class="px-4">
                     <v-layout row wrap justify-center align-center fill-height>
@@ -58,7 +58,7 @@
                         </v-flex>
                         <v-flex xs12 lg6>
                             <v-card-text class="display-1 font-weight-light primary--text text-xs-center text-lg-left">
-                                Lihat Semua Stand!
+                                Lihat Semua Brand!
                             </v-card-text>
                         </v-flex>
                     </v-layout>
@@ -125,18 +125,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import ProductCard from './ProductCard'
-import StandCard from './StandCard'
+import BrandCard from './BrandCard'
 
 export default {
     components: {
         ProductCard,
-        StandCard,
+        BrandCard,
     },
     data() {
         return {
-            randomStandLoading: true,
+            randomBrandLoading: true,
             randomProductLoading: true,
-            stands: [],
+            brands: [],
             products: [],
         }
     },
@@ -146,18 +146,18 @@ export default {
         ]),
     },
     methods: {
-        loadRandomStand() {
+        loadRandomBrand() {
             return new Promise(async (resolve, reject) => {
-                this.randomStandLoading = true;
+                this.randomBrandLoading = true;
                 try {
-                    const res = await axios.get('/api/stands/random');
-                    this.stands = res.data;
+                    const res = await axios.get('/api/brands/random');
+                    this.brands = res.data;
                     
                     resolve("oke")
                 } catch (err) {
                     reject(err);
                 }
-                this.randomStandLoading = false;
+                this.randomBrandLoading = false;
             })
         },
         loadRandomProduct() {
@@ -186,7 +186,7 @@ export default {
         },
     },
     async mounted() {
-        Promise.all([this.loadRandomStand(), this.loadRandomProduct()]);
+        Promise.all([this.loadRandomBrand(), this.loadRandomProduct()]);
     },
 }
 </script>

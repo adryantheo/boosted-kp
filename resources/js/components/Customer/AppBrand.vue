@@ -2,7 +2,7 @@
     <div>
         <v-parallax
             dark
-            src="/assets/stands_bg.jpg"
+            src="/assets/brands_bg.jpg"
             height="300"
         >
         </v-parallax>
@@ -13,7 +13,7 @@
                     <v-icon>arrow_back</v-icon>
                 </v-btn>
                 <div class="ml-4">
-                    <div class="headline font-weight-bold mb-1">Stand {{ name }}</div>
+                    <div class="headline font-weight-bold mb-1">Brand {{ name }}</div>
                     <div class="subheading">{{ description }}</div>
                 </div>
             </v-layout>
@@ -24,7 +24,7 @@
                 Daftar Menu
             </p>
             <v-layout row wrap>
-                <v-flex xs12 md4 lg3  v-for="(item, i) in standProducts" :key="`am-${i}`">
+                <v-flex xs12 md4 lg3  v-for="(item, i) in brandProducts" :key="`am-${i}`">
                     <product-card :item="item"></product-card>
                 </v-flex>
             </v-layout>
@@ -41,7 +41,7 @@ export default {
         ProductCard,
     },
     props: {
-        stand: {
+        brand: {
             type: String,
             required: true,
         },
@@ -50,7 +50,7 @@ export default {
         return {
             name: "",
             description: "",
-            standProducts: [],
+            brandProducts: [],
         }
     },
     computed: {
@@ -59,12 +59,12 @@ export default {
         ]),
     },
     methods: {
-        async fetchStandDetails() {
-            const res = await axios.get(`/api/stands/${this.stand}`);
-            const stand = res.data;
-            this.name = stand.name;
-            this.description = stand.description;
-            this.standProducts = stand.products.map((item) => {
+        async fetchBrandDetails() {
+            const res = await axios.get(`/api/brands/${this.brand}`);
+            const brand = res.data;
+            this.name = brand.name;
+            this.description = brand.description;
+            this.brandProducts = brand.products.map((item) => {
                 let q = 0;
                 this.getCartItems.forEach(cartItem => {
                     if(cartItem.id === item.id) {
@@ -79,7 +79,7 @@ export default {
         },
     },
     mounted() {
-        this.fetchStandDetails();
+        this.fetchBrandDetails();
     }
 }
 </script>

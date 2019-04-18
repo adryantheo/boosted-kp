@@ -2,7 +2,7 @@
     <v-card>
         <v-toolbar color="transparent" flat>
             <v-toolbar-title class="headline">
-                {{ !!standId? 'Ubah Stand' : 'Stand Baru'}}
+                {{ !!brandId? 'Ubah Brand' : 'Brand Baru'}}
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon @click="$emit('close')">
@@ -17,13 +17,13 @@
                 indeterminate
             ></v-progress-circular>
         </v-card-text>
-        <v-form ref="form_new_stand" @submit.prevent="createNewStand" v-show="!dialogLoading">
+        <v-form ref="form_new_brand" @submit.prevent="createNewBrand" v-show="!dialogLoading">
             <v-card-text>
             <v-container grid-list-lg>
                 <v-layout row wrap>
                     <v-flex xs12>
                         <v-text-field
-                            label="Nama stand"
+                            label="Nama brand"
                             v-model="name"
                             :rules="[rules.required]"
                             ref="name"
@@ -31,7 +31,7 @@
                     </v-flex>
                     <v-flex xs12>
                         <v-textarea
-                            label="Deskripsi stand"
+                            label="Deskripsi brand"
                             v-model="description"
                             :rules="[rules.required]"
                             rows="3"
@@ -44,9 +44,9 @@
                 <v-spacer></v-spacer>
                 <v-btn color="primary" large type="submit" :loading="btnLoading">
                     <v-icon left>
-                        {{ !!standId? 'save' : 'add'}}
+                        {{ !!brandId? 'save' : 'add'}}
                     </v-icon>
-                    {{ !!standId? 'simpan' : 'buat stand'}}
+                    {{ !!brandId? 'simpan' : 'buat brand'}}
                 </v-btn>
             </v-card-actions>
         </v-form>
@@ -55,7 +55,7 @@
 <script>
 export default {
     props: {
-        standId: {
+        brandId: {
             type: Number,
             required: true,
         }
@@ -71,22 +71,22 @@ export default {
         },
     }),
     methods: {
-        async createNewStand() {
-            if(this.$refs.form_new_stand.validate()) {
+        async createNewBrand() {
+            if(this.$refs.form_new_brand.validate()) {
                 this.btnLoading = true;
                 try {
-                    if(!this.standId) {
-                        const res = await axios.post('/api/stands', {
+                    if(!this.brandId) {
+                        const res = await axios.post('/api/brands', {
                             name: this.name,
                             description: this.description
                         })
-                        alert("Stand berhasil dibuat");
+                        alert("Brand berhasil dibuat");
                     } else {
-                        const res = await axios.patch(`/api/stands/${this.standId}`, {
+                        const res = await axios.patch(`/api/brands/${this.brandId}`, {
                             name: this.name,
                             description: this.description
                         })
-                        alert("Stand berhasil diubah");
+                        alert("Brand berhasil diubah");
                     }
                     this.$emit('create_success');
                 } catch (err) {
@@ -96,8 +96,8 @@ export default {
         },
     },
     async mounted() {
-        if(!!this.standId) {
-            const res = await axios.get(`/api/stands/${this.standId}`)
+        if(!!this.brandId) {
+            const res = await axios.get(`/api/brands/${this.brandId}`)
             this.name = res.data.name
             this.description = res.data.description
         }

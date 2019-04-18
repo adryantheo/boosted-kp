@@ -58,7 +58,7 @@ class NotaController extends Controller
         return response()->json(
             $nota::with([
                 'Order',
-                'Order.Product.Stand:id,name',                           
+                'Order.Product.Brand:id,name',                           
                 ])
         ->where('id', '=', $nota->id)->first());
     }

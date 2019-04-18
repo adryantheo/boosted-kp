@@ -34,7 +34,7 @@ class ProductController extends Controller
             'units' => $request->units,
             'price' => $request->price,
             'image' => $this->uploadImage($request),
-            'stand_id' => $request->stand_id
+            'brand_id' => $request->brand_id
             
             
         ]);
@@ -88,7 +88,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $data = $request->only(['name', 'description', 'units', 'price', 'stand_id']);
+        $data = $request->only(['name', 'description', 'units', 'price', 'brand_id']);
         // $data['image'] = $this->uploadImage($request, $product->image);
 
         $status = $product->update($data);

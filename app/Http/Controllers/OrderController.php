@@ -10,13 +10,13 @@ class OrderController extends Controller
    
     public function index(Request $request)
     {
-        if ($request->has('stand')) {
+        if ($request->has('brand')) {
             return response()->json(
                 Order::with([
                     'Nota:id,customer',
                     'Product'=> function($query) use ($request) {
                         
-                        $query->where('stand_id', '=', $request->input('stand'));
+                        $query->where('brand_id', '=', $request->input('brand'));
                         $query->select('id', 'name');
                         $query->withTrashed();
                         
@@ -38,7 +38,7 @@ class OrderController extends Controller
             'Product'=> function($query){
                 $query->withTrashed();
             },
-            'Product.Stand'=>function($query){
+            'Product.Brand'=>function($query){
                 $query->withTrashed();
                 $query->select('id', 'name');
             }

@@ -95,7 +95,7 @@
 <script>
 export default {
     props: {
-        stand: {
+        brand: {
             type: Number,
             required: true,
         },
@@ -159,7 +159,7 @@ export default {
                 data.append(`units`, this.stock);
                 data.append(`description`, this.description);
                 data.append(`image`, this.fileBin); 
-                data.append(`stand_id`, this.stand); 
+                data.append(`brand_id`, this.brand); 
                 
                 try {
                     if(!this.productId) {
@@ -174,7 +174,7 @@ export default {
                             description: this.description,
                             units: this.stock,
                             price: this.price,
-                            stand_id: this.stand
+                            brand_id: this.brand
                         });
                     }
                     this.$emit('create_success');   

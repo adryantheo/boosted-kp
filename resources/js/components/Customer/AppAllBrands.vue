@@ -5,7 +5,7 @@
                 <v-icon>arrow_back</v-icon>
             </v-btn>
             <div class="ml-4 headline font-weight-bold">
-                Semua Stand
+                Semua Brand
             </div>
         </v-layout>
 
@@ -15,7 +15,7 @@
             <v-flex xs12 sm8 lg6>
                 <v-text-field
                     solo
-                    label="Cari stand"
+                    label="Cari brand"
                     clearable
                     v-model="querySearch"
                 >
@@ -25,29 +25,29 @@
         </v-layout>
 
         <v-layout row wrap>
-            <v-flex xs12 md6 xl4 v-for="(item, id) in getFilteredStands" :key="`stand-${id}`">
-                <stand-card :item="item"></stand-card>
+            <v-flex xs12 md6 xl4 v-for="(item, id) in getFilteredBrands" :key="`brand-${id}`">
+                <brand-card :item="item"></brand-card>
             </v-flex>
         </v-layout>
     </v-container>
 </template>
 <script>
-import StandCard from './StandCard'
+import BrandCard from './BrandCard'
 
 export default {
     components: {
-        StandCard,
+        BrandCard,
     },
     data() {
         return {
-            stands: [],
+            brands: [],
             querySearch: "",
         }
     },
     computed: {
-        getFilteredStands() {
+        getFilteredBrands() {
             if(!!this.querySearch) {
-                return this.stands.filter((item) => {
+                return this.brands.filter((item) => {
                     const hasName = item.name.toLowerCase().replace(/ /g,'').indexOf(this.querySearch.toLowerCase()) >= 0
 
                     const hasDesc = item.description.toLowerCase().replace(/ /g,'').indexOf(this.querySearch.toLowerCase()) >= 0
@@ -55,18 +55,18 @@ export default {
                     return (hasName || hasDesc);
                 });
             } else {
-                return this.stands;
+                return this.brands;
             }
         },
     },
     methods: {
-        async getStands() {
-            const res = await axios.get('/api/stands');
-            this.stands = res.data;
+        async getBrands() {
+            const res = await axios.get('/api/brands');
+            this.brands = res.data;
         }
     },
     mounted() {
-        this.getStands();
+        this.getBrands();
     }
 }
 </script>

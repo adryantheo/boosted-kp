@@ -47,7 +47,7 @@
             <div class="ma-3">
                 <div class="text-xs-center">
                     <p class="headline">Laporan Riwayat Transaksi</p>
-                    <p class="title">Stand {{ standName }}</p>
+                    <p class="title">Brand {{ brandName }}</p>
                 </div>
                 <div>
                     <table class="orders">
@@ -90,11 +90,11 @@
 <script>
 export default {
     props: {
-        standName: {
+        brandName: {
             type: String,
             required: true,
         },
-        standId: {
+        brandId: {
             type: String,
             required: true,
         },
@@ -124,17 +124,17 @@ export default {
         print() {
             this.$htmlToPaper('printMe');
         },
-        fetchStandOrders() {
+        fetchBrandOrders() {
             return axios.get('/api/orders', {
                 params: {
-                    stand: this.standId
+                    brand: this.brandId
                 }
             });
         },
-        async getStandOrders() {
+        async getBrandOrders() {
             this.loading = true;
             try {
-                const res = await this.fetchStandOrders();
+                const res = await this.fetchBrandOrders();
                 let tes = res.data.filter(item => !!item.product);
 
                 this.items = tes.map(item => ({
@@ -157,9 +157,9 @@ export default {
         },
     },
     mounted() {
-        this.getStandOrders();
+        this.getBrandOrders();
         EventBus.$on('reload_orders',() => {
-            this.getStandOrders();
+            this.getBrandOrders();
         }); 
         EventBus.$on('print_orders',() => {
             this.$htmlToPaper('printMe');
