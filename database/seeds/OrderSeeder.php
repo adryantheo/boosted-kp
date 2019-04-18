@@ -16,8 +16,6 @@ class OrderSeeder extends Seeder
                 'harga_satuan' => $faker->randomNumber(2),
                 'quantity' => $faker->randomNumber(2),
                 'nota_id' => $faker->numberBetween(2,6),
-                
-                
             ]);
         }
     }

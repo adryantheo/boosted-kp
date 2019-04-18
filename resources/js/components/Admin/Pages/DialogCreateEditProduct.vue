@@ -164,6 +164,7 @@ export default {
                 data.append(`name`, this.name); 
                 data.append(`price`, this.price); 
                 data.append(`units`, this.stock);
+                data.append(`size`, this.size);
                 data.append(`description`, this.description);
                 if(!!this.fileBin) {
                     data.append(`image`, this.fileBin);
@@ -182,6 +183,7 @@ export default {
                             name: this.name,
                             description: this.description,
                             units: this.stock,
+                            size: this.size,
                             price: this.price,
                             brand_id: this.brand
                         });
