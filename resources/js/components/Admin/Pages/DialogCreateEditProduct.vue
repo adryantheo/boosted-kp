@@ -44,11 +44,19 @@
             <v-card-text>
             <v-container grid-list-lg>
                 <v-layout row wrap>
-                    <v-flex xs12>
+                    <v-flex xs12 md8>
                         <v-text-field
                             label="Nama sepatu"
                             v-model="name"
                             :rules="[rules.required]"
+                            ref="name"
+                        ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md4>
+                        <v-text-field
+                            label="Ukuran sepatu"
+                            v-model.number="size"
+                            :rules="[rules.required, rules.notZero]"
                             ref="name"
                         ></v-text-field>
                     </v-flex>
