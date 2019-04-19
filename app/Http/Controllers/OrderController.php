@@ -73,7 +73,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $status = $order->update(
-            $request->only(['product_id','quantity','harga_satuan', 'nota_id','is_paid','is_delivered'])
+            $request->only(['is_paid','is_delivered'])
         );
 
         return response()->json([
@@ -81,6 +81,32 @@ class OrderController extends Controller
             'message' => $status ? 'Order Updated!' : 'Error Updating Order'
         ]);
     }
+
+    public function paid(Order $order)
+    {
+        $order->is_paid = true;
+        $order->is_delivered = true;
+        $status = $order->save();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Order Updated!' : 'Error Updating Order'
+        ]);
+    }
+
+    public function canceled(Order $order)
+    {
+       $order->is_paid = false;
+       $order->is_delivered = false;
+       $status = $order->save();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Order Updated!' : 'Error Updating Order'
+        ]);
+    }
+
+    
 
   
     public function destroy(Order $order)
