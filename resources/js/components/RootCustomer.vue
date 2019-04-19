@@ -1,11 +1,5 @@
 <template>
     <v-app>
-        <!-- <v-toolbar
-            color="blue-grey"
-            dark fixed app
-        >
-            <v-toolbar-title>PL Food Bazaar</v-toolbar-title>
-        </v-toolbar> -->
         <v-content>
             <router-view :key="routerKey"></router-view>
             <v-dialog
@@ -143,7 +137,7 @@
             </v-dialog>
             <div id="nota" v-show="false">
                 <div v-for="n in 2" :key="`nota-${n}`" class="mb-5">
-                    <p class="title text-xs-center">PL Food Bazaar</p>
+                    <p class="title text-xs-center">Toko Sepatu Footz</p>
                     <div>
                         <div>No Nota: {{ nota.id }}</div>
                         <div>Cust : {{ nota.customer }}</div>

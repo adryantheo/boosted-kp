@@ -103,7 +103,7 @@
             <div class="ma-3">
                 <div class="text-xs-center">
                     <p class="headline">Laporan Riwayat Transaksi</p>
-                    <p class="title">Seluruh Brand</p>
+                    <p class="title">Toko Sepatu Footz</p>
                 </div>
                 <div>
                     <table class="orders">
