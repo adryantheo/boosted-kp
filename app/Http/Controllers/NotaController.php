@@ -37,9 +37,10 @@ class NotaController extends Controller
                 Order::create([
                     'product_id' => $detail['product_id'],
                     'harga_satuan' => $detail['harga_satuan'],
+                    'is_delivered' => $detail['is_delivered'],
+                    'is_paid' => $detail['is_paid'],
                     'quantity' => $detail['quantity'],
                     'nota_id' => $nota->id,
-                    
                 ]);
 
                 $product = Product::find($detail['product_id']);

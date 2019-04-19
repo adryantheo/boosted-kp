@@ -64,12 +64,34 @@
                         <template v-slot:items="props">
                             <td>{{ props.item.id }}</td>
                             <td>{{ props.item.date }}</td>
-                            <td>{{ props.item.brand }}</td>
                             <td>{{ props.item.sepatu }}</td>
                             <td>{{ props.item.customer }}</td>
                             <td class="text-xs-right">{{ props.item.qty }}</td>
                             <td class="text-xs-right">{{ $rupiahFormat(props.item.price) }}</td>
                             <td class="text-xs-right">{{ $rupiahFormat(props.item.total) }}</td>
+                            <td>{{ props.item.status }}</td>
+                            <td class="text-xs-center">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn icon flat color="success" v-on="on"
+                                        :disabled="props.item.status === 'sukses' || props.item.status === 'batal'"
+                                        @click="confirm(props.item)">
+                                            <v-icon>done</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>Konfirmasi</span>
+                                </v-tooltip>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn icon flat color="error" v-on="on"
+                                        :disabled="props.item.status === 'sukses' || props.item.status === 'batal'"
+                                        @click="cancel(props.item)">
+                                            <v-icon>close</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>Batalkan</span>
+                                </v-tooltip>
+                            </td>
                         </template>
                     </v-data-table>
                 </v-card>
@@ -88,23 +110,23 @@
                         <tr>
                             <th>Id order</th>
                             <th>Tanggal order</th>
-                            <th>Brand</th>
                             <th>Sepatu</th>
                             <th>Pelanggan</th>
                             <th>Jumlah</th>
                             <th>Harga</th>
                             <th>Total</th>
+                            <th>Status</th>
                         </tr>
                         <template v-for="(item, i) in items">
                             <tr :key="i">
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.date }}</td>
-                                <td>{{ item.brand }}</td>
                                 <td>{{ item.sepatu }}</td>
                                 <td>{{ item.customer }}</td>
                                 <td class="text-xs-right">{{ item.qty }}</td>
                                 <td class="text-xs-right">{{ $rupiahFormat(item.price) }}</td>
                                 <td class="text-xs-right">{{ $rupiahFormat(item.total) }}</td>
+                                <td>{{ item.status }}</td>
                             </tr>
                         </template>
                         <tfoot class="title">
@@ -130,23 +152,36 @@ export default {
         headers: [
             { text: 'ID', value: 'id', sortable: false },
             { text: 'Tgl order', value: 'date' },
-            { text: 'Nama brand', value: 'brand'},
-            { text: 'Nama sepatu', value: 'sepatu', sortable: false  },
+            { text: 'Sepatu', value: 'sepatu', sortable: false },
             { text: 'Pelanggan', value: 'customer', sortable: false },
             { text: 'Jumlah', value: 'qty' },
             { text: 'Harga', value: 'price' },
             { text: 'Total', value: 'total' },
+            { text: 'Status', value: 'status' },
+            { text: 'Action', value: 'status', sortable: false },
         ],
         items: [],
         dialogTransactionDetail: false,
     }),
     computed: {
         getTotalSold() {
-            return this.items.reduce((acc, item) => acc + item.qty, 0);
+            return this.items.reduce((acc, item) => {
+                if(item.status === 'sukses') {
+                    return acc + item.qty;
+                } else {
+                    return acc + 0;
+                }
+            }, 0);
         }, 
         getTotalEarnings() {
-            return this.items.reduce((acc, item) => acc + item.total, 0);
-        }, 
+            return this.items.reduce((acc, item) => {
+                if(item.status === 'sukses') {
+                    return acc + item.total;
+                } else {
+                    return acc + 0;
+                }
+            }, 0);
+        },
     },
     methods: {
         fetchAllOrders() {
@@ -159,17 +194,37 @@ export default {
                 this.items = res.data.map(item => ({
                     id: item.id,
                     date: item.created_at,
-                    brand: item.product.brand.name,
-                    sepatu: item.product.name,
+                    sepatu: `${item.product.brand.name} ${item.product.name} (${item.product.size} ${item.product.gender})`,
                     customer: item.nota.customer,
                     price: item.harga_satuan,
                     qty: item.quantity,
-                    total: (item.quantity * item.harga_satuan)
-                }));
+                    total: (item.quantity * item.harga_satuan),
+                    status: this.getOrderStatus(item),
+                })).reverse();
             } catch (err) {
                 console.log(err);
             }
             this.loading = false;
+        },
+        getOrderStatus({is_delivered, is_paid}) {
+            if(!!is_delivered) {
+                if(!is_paid) {
+                    return "dikirim";
+                } else {
+                    return "sukses";
+                }
+            } else {
+                return "batal";
+            }
+            return "ye";
+        },
+        confirm(order) {
+            console.log("confirm", order);
+            order.status = 'sukses'
+        },
+        cancel(order) {
+            console.log("cancel", order);
+            order.status = 'batal'
         },
         printOrders() {
             this.$htmlToPaper('printMe');
