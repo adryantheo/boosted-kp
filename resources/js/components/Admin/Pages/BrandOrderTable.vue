@@ -203,13 +203,63 @@ export default {
             }
             return "ye";
         },
-        confirm(order) {
-            console.log("confirm", order);
-            order.status = 'sukses'
+        async confirm(order) {
+            const willConfirm = await swal({
+                title: "Yakin ingin konfirmasi pesanan?",
+                icon: "warning",
+                closeOnClickOutside: false,
+                buttons: {
+                    cancel: {
+                        text: "TIDAK",
+                        value: false,
+                        visible: true,
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "YA",
+                        value: true,
+                        visible: true,
+                        closeModal: true
+                    }
+                }
+            });
+            if(willConfirm) {
+                let res = await axios.patch(`orders/${order.id}/paid`);
+                await swal({
+                    title: "Pesanan dikonfirmasi",
+                    icon: "success",
+                });
+                order.status = 'sukses';
+            }
         },
-        cancel(order) {
-            console.log("cancel", order);
-            order.status = 'batal'
+        async cancel(order) {
+            const willCancel = await swal({
+                title: "Yakin ingin membatalkan pesanan?",
+                icon: "warning",
+                closeOnClickOutside: false,
+                buttons: {
+                    cancel: {
+                        text: "TIDAK",
+                        value: false,
+                        visible: true,
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "YA",
+                        value: true,
+                        visible: true,
+                        closeModal: true
+                    }
+                }
+            });
+            if(willCancel) {
+                let res = await axios.patch(`orders/${order.id}/canceled`);
+                await swal({
+                    title: "Pesanan dibatalkan",
+                    icon: "success",
+                });
+                order.status = 'batal';
+            }
         },
     },
     mounted() {

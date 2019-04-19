@@ -269,7 +269,7 @@ export default {
                             closeModal: true
                         }
                     }
-                })
+                });
                 if(willOrder) {
                     let res = await this.makeOrder({
                         name: this.ordererName, 
