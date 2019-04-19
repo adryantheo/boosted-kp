@@ -119,8 +119,6 @@
     </v-container>
 </template>
 <script>
-import { mapMutations } from 'vuex'
-import { mapGetters } from 'vuex'
 import DialogCreateEditProduct from './DialogCreateEditProduct'
 import BrandOrderTable from './BrandOrderTable'
 
@@ -151,16 +149,7 @@ export default {
         dialogCreateEditProduct: false,
         dialogCreateEditProductKey: 0,
     }),
-    computed: {
-        ...mapGetters([
-            'getCartItems'
-        ]),
-    },
     methods: {
-        ...mapMutations({
-            addToCartVuex: 'addToCart',
-            removeFromCartVuex: 'removeFromCart',
-        }),
         fetchBrandDetails() {
             return axios.get(`/api/brands/${this.brand}`);
         },
@@ -190,7 +179,6 @@ export default {
             if(willDelete) {
                 try {
                     const res = await axios.delete(`/api/products/${id}`, null);
-                    console.log(res.data);
                     this.getBrandDetails();
                 } catch (err) {
                     console.log(err);
