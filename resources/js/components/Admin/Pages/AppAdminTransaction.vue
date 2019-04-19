@@ -70,6 +70,28 @@
                             <td class="text-xs-right">{{ $rupiahFormat(props.item.price) }}</td>
                             <td class="text-xs-right">{{ $rupiahFormat(props.item.total) }}</td>
                             <td>{{ props.item.status }}</td>
+                            <td class="text-xs-center">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn icon flat color="success" v-on="on"
+                                        :disabled="props.item.status === 'sukses' || props.item.status === 'batal'"
+                                        @click="confirm(props.item)">
+                                            <v-icon>done</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>Konfirmasi</span>
+                                </v-tooltip>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn icon flat color="error" v-on="on"
+                                        :disabled="props.item.status === 'sukses' || props.item.status === 'batal'"
+                                        @click="cancel(props.item)">
+                                            <v-icon>close</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>Batalkan</span>
+                                </v-tooltip>
+                            </td>
                         </template>
                     </v-data-table>
                 </v-card>
@@ -136,16 +158,29 @@ export default {
             { text: 'Harga', value: 'price' },
             { text: 'Total', value: 'total' },
             { text: 'Status', value: 'status' },
+            { text: 'Action', value: 'status', sortable: false },
         ],
         items: [],
         dialogTransactionDetail: false,
     }),
     computed: {
         getTotalSold() {
-            return this.items.reduce((acc, item) => acc + item.qty, 0);
+            return this.items.reduce((acc, item) => {
+                if(item.status === 'sukses') {
+                    return acc + item.qty;
+                } else {
+                    return acc + 0;
+                }
+            }, 0);
         }, 
         getTotalEarnings() {
-            return this.items.reduce((acc, item) => acc + item.total, 0);
+            return this.items.reduce((acc, item) => {
+                if(item.status === 'sukses') {
+                    return acc + item.total;
+                } else {
+                    return acc + 0;
+                }
+            }, 0);
         },
     },
     methods: {
@@ -182,6 +217,14 @@ export default {
                 return "batal";
             }
             return "ye";
+        },
+        confirm(order) {
+            console.log("confirm", order);
+            order.status = 'sukses'
+        },
+        cancel(order) {
+            console.log("cancel", order);
+            order.status = 'batal'
         },
         printOrders() {
             this.$htmlToPaper('printMe');
