@@ -60,14 +60,27 @@
                     </v-window-item>
 
                     <v-window-item :value="2">
-                        <v-card-text>
+                    <v-card-text>
                         <v-text-field
                             v-model="ordererName"
-                            label="Nama anda"
+                            label="Nama"
                             type="text"
                             ref="orderer_name"
                         ></v-text-field>
-                        </v-card-text>
+                        <v-textarea
+                            v-model="ordererAddress"
+                            label="Alamat"
+                            type="text"
+                            ref="orderer_address"
+                            rows="2" auto-grow
+                        ></v-textarea>
+                        <v-text-field
+                            v-model="ordererPhone"
+                            label="Nomor telepon"
+                            type="text"
+                            ref="orderer_phone"
+                        ></v-text-field>
+                    </v-card-text>
                     </v-window-item>
                     </v-window>
 
@@ -83,7 +96,7 @@
                     <v-btn
                         v-if="step === 2" large
                         color="success" @click="createOrder"
-                        :disabled="!ordererName"
+                        :disabled="!ordererName || !ordererAddress || !ordererPhone"
                         :loading="loading"
                     >
                         Pesan
@@ -199,6 +212,8 @@ export default {
         cartDialog: false,
         step: 1,
         ordererName: "",
+        ordererAddress: "",
+        ordererPhone: "",
         loading: false,
         bisaPrint: false,
         nota: {
