@@ -271,7 +271,11 @@ export default {
                     }
                 })
                 if(willOrder) {
-                    let res = await this.makeOrder(this.ordererName);
+                    let res = await this.makeOrder({
+                        name: this.ordererName, 
+                        address: this.ordererAddress, 
+                        phone: this.ordererPhone
+                    });
                     let print = await axios.get(`/api/nota/${res.data.nota_id}`);
                     this.nota = print.data;
                     this.closeDialog();

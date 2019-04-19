@@ -58,20 +58,24 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        async makeOrder({ commit, state }, name) {
+        async makeOrder({ commit, state }, {name, address, phone}) {
             const total = state.cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0)
 
             const data = state.cartItems.map(
                 (item) => ({
                     product_id: item.id,
                     harga_satuan: item.price,
-                    quantity: item.qty
+                    quantity: item.qty,
+                    is_delivered: true,
+                    is_paid: false,
                 })
             );
 
             try {
                 const res = await axios.post('/api/nota', {
                     customer: name,
+                    address: address,
+                    phone: phone,
                     harga_total: total,
                     products: data
                 },{

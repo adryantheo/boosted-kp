@@ -53,6 +53,8 @@ class OrderController extends Controller
             'product_id' => $request->product_id,
             'quantity' => $request->quantity,
             'harga_satuan' => $request->harga_satuan,
+            'is_delivered' => $request->is_delivered,
+            'is_paid' => $request->is_paid,
             'nota_id' => $request->nota_id,
         ]);
 
