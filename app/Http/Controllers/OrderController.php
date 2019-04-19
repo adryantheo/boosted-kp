@@ -73,7 +73,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $status = $order->update(
-            $request->only(['product_id','quantity','harga_satuan', 'nota_id'])
+            $request->only(['product_id','quantity','harga_satuan', 'nota_id','is_paid','is_delivered'])
         );
 
         return response()->json([

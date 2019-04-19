@@ -15,6 +15,8 @@ class CreateOrdersTable extends Migration
             $table->double('harga_satuan');
             $table->unsignedInteger('quantity');
             $table->unsignedInteger('nota_id');
+            $table->boolean('is_paid')->default(false);
+            $table->boolean('is_delivered')->default(false);
 
             $table->timestamps();
         });

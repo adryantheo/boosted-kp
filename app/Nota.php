@@ -8,7 +8,9 @@ class Nota extends Model
 {
     protected $fillable = [
         'harga_total',
-        'customer'
+        'customer',
+        'address',
+        'phone'
     ];
 
     public function Order(){

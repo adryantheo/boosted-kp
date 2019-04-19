@@ -27,7 +27,9 @@ class NotaController extends Controller
             //Creating a new transaction
             $nota = Nota::create([
                 'harga_total' => $request->input('harga_total'),
-                'customer' => $request->input('customer')
+                'customer' => $request->input('customer'),
+                'address' => $request->input('address'),
+                'phone' => $request->input('phone'),
             ]);
 
             //Creating order details
@@ -36,7 +38,8 @@ class NotaController extends Controller
                     'product_id' => $detail['product_id'],
                     'harga_satuan' => $detail['harga_satuan'],
                     'quantity' => $detail['quantity'],
-                    'nota_id' => $nota->id
+                    'nota_id' => $nota->id,
+                    
                 ]);
 
                 $product = Product::find($detail['product_id']);
@@ -67,7 +70,7 @@ class NotaController extends Controller
     public function update(Request $request, Nota $nota)
     {
         $status = $nota->update(
-            $request->only([ 'harga_total'])
+            $request->only([ 'harga_total','phone','address','customer'])
         );
 
         return response()->json([

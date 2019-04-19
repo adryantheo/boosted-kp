@@ -11,6 +11,8 @@ class Order extends Model
         'harga_satuan',
         'quantity',
         'nota_id',
+        'is_delivered',
+        'is_paid'
         
     ];
 

@@ -12,6 +12,8 @@ class CreateNotasTable extends Migration
             $table->bigIncrements('id');
             $table->double('harga_total');
             $table->string("customer");
+            $table->string('address');
+            $table->string('phone');
             $table->timestamps();
         });
     }

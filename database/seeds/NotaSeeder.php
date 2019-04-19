@@ -13,7 +13,9 @@ class NotaSeeder extends Seeder
         foreach(range (1,10) as $i){
             Nota::create([
                 'harga_total' => $faker->randomNumber(2),
-                'customer' => $faker->name
+                'customer' => $faker->name,
+                'address' => $faker->name,
+                'phone' => $faker->phoneNumber,
             ]);
         }
     }

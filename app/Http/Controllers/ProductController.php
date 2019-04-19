@@ -20,12 +20,6 @@ class ProductController extends Controller
         return response()->json(Product::all(),200);
     }
 
-    /**
-     * Save a new product to storage.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store(Request $request)
     {
         $product = Product::create([
@@ -48,13 +42,6 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Handle an image upload.
-     *
-     * @param Request $request
-     * @param null $name
-     * @return string
-     */
     public function uploadImage(Request $request, $name = null)
     {
         if($request->hasFile('image')){
@@ -72,22 +59,11 @@ class ProductController extends Controller
         return '';
     }
 
-    /**
-     * @param Product $product
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function show(Product $product)
     {
         return response()-> json($product,200);
     }
 
-    /**
-     * Update a product from storage.
-     *
-     * @param Request $request
-     * @param Product $product
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function update(Request $request, Product $product)
     {
         $data = $request->only(['name', 'description', 'units', 'price', 'brand_id']);
@@ -101,13 +77,7 @@ class ProductController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove a product from storage.
-     *
-     * @param Product $product
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
+  
     public function destroy(Product $product)
     {
         $status = $product->delete();

@@ -37,13 +37,6 @@ class BrandController extends Controller
         ]);
     }
 
-    /**
-     * Handle an image upload.
-     *
-     * @param Request $request
-     * @param null $name
-     * @return string
-     */
     public function uploadImage(Request $request, $name = null)
     {
         if($request->hasFile('image')){
