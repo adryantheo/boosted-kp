@@ -13,19 +13,16 @@ class OrderController extends Controller
         if ($request->has('brand')) {
             return response()->json(
                 Order::with([
-                    'Nota:id,customer',
-                    'Product'=> function($query) use ($request) {
-                        
-                        $query->where('brand_id', '=', $request->input('brand'));
-                        $query->select('id', 'name');
+                    'Nota:id,customer,address,phone',
+                    'Product.Brand'=>function($query){
                         $query->withTrashed();
-                        
+                        $query->select('id', 'name');
                     }
                 ])->get()
             );
         }
 
-        return response()->json(Order::with(['Nota:id,customer', 'Product:id,name'])->get(),200);
+        return response()->json(Order::with(['Nota:id,customer, address, phone', 'Product:id,name'])->get(),200);
     }
 
     public function all()
@@ -33,7 +30,7 @@ class OrderController extends Controller
         return response()->json(Order::with([
             'Nota' => function($query)
             {
-                $query->select('id','customer');
+                $query->select('id','customer', 'address','phone');
             },
             'Product'=> function($query){
                 $query->withTrashed();
