@@ -224,7 +224,7 @@ export default {
                 }
             });
             if(willConfirm) {
-                let res = await axios.patch(`orders/${order.id}/paid`);
+                let res = await axios.patch(`/api/orders/${order.id}/paid`);
                 await swal({
                     title: "Pesanan dikonfirmasi",
                     icon: "success",
@@ -253,7 +253,7 @@ export default {
                 }
             });
             if(willCancel) {
-                let res = await axios.patch(`orders/${order.id}/canceled`);
+                let res = await axios.patch(`/api/orders/${order.id}/canceled`);
                 await swal({
                     title: "Pesanan dibatalkan",
                     icon: "success",
