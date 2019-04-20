@@ -2,21 +2,14 @@
     <div>
         <v-parallax
             dark
-            src="/assets/main-bg.png"
-            height="700"
+            src="/assets/bg-main.jpg"
+            max-height="750"
         >
-            <v-layout align-center justify-center>
-                <v-img
-                    src="/assets/svg/logo.svg"
-                    max-height="700" contain
-                    position="center center"
-                ></v-img>
-            </v-layout>
         </v-parallax>
         <v-container grid-list-lg class="my-5">
             <!-- Random Brand -->
             <v-layout justify-space-between align-center>
-                <div class="headline font-weight-bold">Daftar Brand</div>
+                <div class="headline font-weight-bold">Daftar Merk</div>
                 <v-btn color="primary" @click="loadRandomBrand" :loading="randomBrandLoading">
                     <v-icon left>replay</v-icon>
                     Muat lain

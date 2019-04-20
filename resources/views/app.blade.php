@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Bazaar PL</title>
+        <title>Shoe Store</title>
         <link rel="stylesheet" sizes="192x192" href="{{ mix('/css/app.css') }}">
     </head>
     <body>
