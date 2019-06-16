@@ -66,15 +66,25 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        $data = $request->only(['name', 'description', 'units', 'price', 'brand_id']);
-        // $data['image'] = $this->uploadImage($request, $product->image);
+        
 
-        $status = $product->update($data);
+        $status = Product::find($product);
+        $status->name = $request['name'];
+        $status->description = $request['description'];
+        $status->units = $request['units'];
+        $status->price = $request['price'];
+        $status->size = $request['size'];
+        $status->gender = $request['gender'];
+        $status->brand_id = $request['brand_id'];
+        $status->image= $this->uploadImage($request);
+        $status->update();
 
         return response()->json([
             'status' => $status,
             'message' => $status ? 'Product Updated!' : 'Error Updating Product'
         ], 200);
+
+       
     }
 
   

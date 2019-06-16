@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 Route::post('login', 'UserController@login');
 Route::post('register', 'UserController@register');
 Route::post('/upload-image', 'ProductController@uploadImage');
+Route::post('/products/{product}', 'ProductController@update');
 
 
 
@@ -21,4 +22,4 @@ Route::patch('/orders/{order}/canceled', 'OrderController@canceled');
 Route::resource('/orders', 'OrderController')->except(['all','paid','canceled']);
 Route::resource('/nota', 'NotaController')->except(['show']);
 Route::resource('/brands', 'BrandController')->except(['random', 'uploadImage']);
-Route::resource('/products', 'ProductController')->except(['random', 'uploadImage']);
+Route::resource('/products', 'ProductController')->except(['random', 'uploadImage', 'update']);
