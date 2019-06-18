@@ -31,7 +31,7 @@
 
                 <p v-show="!!errorText" class="red--text">{{ errorText }}</p>
 
-                <v-btn color="primary" flat @click="pickFile" v-if="!productId">
+                <v-btn color="primary" flat @click="pickFile">
                     Unggah Gambar
                 </v-btn>
                 
@@ -175,6 +175,10 @@ export default {
             if(this.$refs.form_new_sepatu.validate()) {
                 this.btnLoading = true;
                 const data = new FormData();
+                // if(!this.productId) {
+                //     data.append('_method', 'PATCH');
+                // }
+
                 data.append(`name`, this.name); 
                 data.append(`price`, this.price); 
                 data.append(`units`, this.stock);
@@ -194,13 +198,10 @@ export default {
                             }
                         });
                     } else {
-                        const res = await axios.patch(`/api/products/${this.productId}`, {
-                            name: this.name,
-                            description: this.description,
-                            units: this.stock,
-                            size: this.size,
-                            price: this.price,
-                            brand_id: this.brand
+                        const res = await axios.post(`/api/products/${this.productId}`, data, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
                         });
                     }
                     this.$emit('create_success');   

@@ -64,7 +64,7 @@ class ProductController extends Controller
         return response()-> json($product,200);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $product)
     {
         
 
@@ -75,8 +75,10 @@ class ProductController extends Controller
         $status->price = $request['price'];
         $status->size = $request['size'];
         $status->gender = $request['gender'];
+        if($request->hasFile('image')) {
+            $status->image= $this->uploadImage($request);
+        }
         $status->brand_id = $request['brand_id'];
-        $status->image= $this->uploadImage($request);
         $status->update();
 
         return response()->json([
