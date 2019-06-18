@@ -66,7 +66,7 @@
                             v-model="gender"
                             item-text="name"
                             item-value="key"
-                            label="label"
+                            label="gender"
                         ></v-select>
                     </v-flex>
                     <v-flex xs12>
@@ -218,6 +218,8 @@ export default {
             this.description = res.data.description;
             this.stock = res.data.units;
             this.price = res.data.price;
+            this.size = res.data.size;
+            this.gender = res.data.gender;
         }
         this.dialogLoading = false;
         this.$nextTick(() => this.$refs.name.focus());
