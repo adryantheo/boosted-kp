@@ -30,7 +30,7 @@ class ProductController extends Controller
             'size' => $request->size,
             'gender' => $request->gender,
             'image' => $this->uploadImage($request),
-            'brand_id' => $request->brand_id
+            // 'brand_id' => $request->brand_id
             
             
         ]);
@@ -78,7 +78,7 @@ class ProductController extends Controller
         if($request->hasFile('image')) {
             $status->image= $this->uploadImage($request);
         }
-        $status->brand_id = $request['brand_id'];
+        // $status->brand_id = $request['brand_id'];
         $status->update();
 
         return response()->json([
