@@ -150,9 +150,6 @@
                                 <td>
                                     {{ item.product.name }}
                                 </td>
-                                <td>
-                                    Brand {{ item.product.brand.name }}
-                                </td>
                             </tr>
                             <tr :key="`nt2-${i}`">
                                 <td>

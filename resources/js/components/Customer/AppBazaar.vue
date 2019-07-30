@@ -7,61 +7,6 @@
         >
         </v-parallax>
         <v-container grid-list-lg class="my-5">
-            <!-- Random Brand -->
-            <v-layout justify-space-between align-center>
-                <div class="headline font-weight-bold">Daftar Merk</div>
-                <v-btn color="primary" @click="loadRandomBrand" :loading="randomBrandLoading">
-                    <v-icon left>replay</v-icon>
-                    Muat lain
-                </v-btn>
-            </v-layout>
-            
-            <v-divider class="my-3"></v-divider>
-
-            <v-layout column justify-center align-center class="my-5" v-if="randomBrandLoading">
-                <v-flex>
-                    <v-progress-circular
-                        :size="70"
-                        :width="7"
-                        color="primary"
-                        indeterminate
-                    ></v-progress-circular>
-                </v-flex>
-                <v-flex class="title font-weight-light">
-                    Memuat brand
-                </v-flex>
-            </v-layout>
-            <v-layout row wrap justify-center v-else>
-                <v-flex xs12 md6 lg4 v-for="(item, id) in brands" :key="`brand-${id}`">
-                    <brand-card :item="item"></brand-card>
-                </v-flex>
-                <v-flex xs12 v-show="!randomBrandLoading">
-                <v-card class="rounded" hover
-                    :ripple="{ class: 'primary--text' }"
-                    to="/brands" height="100%"
-                >
-                    <v-card-text style="height: 100%" class="px-4">
-                    <v-layout row wrap justify-center align-center fill-height>
-                        <v-flex xs12 lg6>
-                        <v-img
-                            src="/assets/svg/stands.svg"
-                            height="180"
-                            contain
-                        ></v-img>
-                        </v-flex>
-                        <v-flex xs12 lg6>
-                            <v-card-text class="display-1 font-weight-light primary--text text-xs-center text-lg-left">
-                                Lihat Semua Brand!
-                            </v-card-text>
-                        </v-flex>
-                    </v-layout>
-                    </v-card-text>
-                </v-card>
-                </v-flex>
-            </v-layout>
-
-            <div class="my-5"></div>
-
             <!-- Random Sepatu -->
             <v-layout justify-space-between align-center>
                 <div class="headline font-weight-bold">Daftar Sepatu</div>
@@ -118,18 +63,14 @@
 <script>
 import { mapGetters } from 'vuex'
 import ProductCard from './ProductCard'
-import BrandCard from './BrandCard'
 
 export default {
     components: {
         ProductCard,
-        BrandCard,
     },
     data() {
         return {
-            randomBrandLoading: true,
             randomProductLoading: true,
-            brands: [],
             products: [],
         }
     },
@@ -139,20 +80,6 @@ export default {
         ]),
     },
     methods: {
-        loadRandomBrand() {
-            return new Promise(async (resolve, reject) => {
-                this.randomBrandLoading = true;
-                try {
-                    const res = await axios.get('/api/brands/random');
-                    this.brands = res.data;
-                    
-                    resolve("oke")
-                } catch (err) {
-                    reject(err);
-                }
-                this.randomBrandLoading = false;
-            })
-        },
         loadRandomProduct() {
             return new Promise(async (resolve, reject) => {
                 this.randomProductLoading = true;
@@ -179,7 +106,7 @@ export default {
         },
     },
     async mounted() {
-        Promise.all([this.loadRandomBrand(), this.loadRandomProduct()]);
+        Promise.all([this.loadRandomProduct()]);
     },
 }
 </script>

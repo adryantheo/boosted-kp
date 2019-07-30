@@ -194,7 +194,7 @@ export default {
                 this.items = res.data.map(item => ({
                     id: item.id,
                     date: item.created_at,
-                    sepatu: `${item.product.brand.name} ${item.product.name} (${item.product.size} ${item.product.gender})`,
+                    sepatu: `${item.product.name} (${item.product.size} ${item.product.gender})`,
                     customer: item.nota.customer,
                     price: item.harga_satuan,
                     qty: item.quantity,

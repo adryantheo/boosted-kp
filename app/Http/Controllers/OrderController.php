@@ -36,10 +36,10 @@ class OrderController extends Controller
             'Product'=> function($query){
                 $query->withTrashed();
             },
-            'Product.Brand'=>function($query){
-                $query->withTrashed();
-                $query->select('id', 'name');
-            }
+            // 'Product.Brand'=>function($query){
+            //     $query->withTrashed();
+            //     $query->select('id', 'name');
+            // }
             
             ])->get(),200);
     }

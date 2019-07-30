@@ -111,10 +111,6 @@
 <script>
 export default {
     props: {
-        brand: {
-            type: Number,
-            required: true,
-        },
         productId: {
             type: Number,
             required: true,
@@ -187,8 +183,7 @@ export default {
                 data.append(`description`, this.description);
                 if(!!this.fileBin) {
                     data.append(`image`, this.fileBin);
-                }
-                data.append(`brand_id`, this.brand); 
+                } 
                 
                 try {
                     if(!this.productId) {

@@ -49,8 +49,8 @@ export default {
         routes: [
             {
                 icon: "store_mall_directory",
-                title: "Brand",
-                route: "/admin/brands",
+                title: "Sepatu",
+                route: "/admin/shoes",
             },
             {
                 icon: "receipt",
